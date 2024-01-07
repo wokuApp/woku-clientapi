@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { WokusModule } from './wokus/wokus.module';
 
 @Module({
-  imports: [],
+  imports: [WokusModule],
   controllers: [AppController],
   providers: [AppService],
 })

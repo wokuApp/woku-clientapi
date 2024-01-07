@@ -26,7 +26,7 @@ export class WokusController {
   @Post('/create')
   async createWoku(
     @Body() createWokuDTO: CreateWokuDTO,
-    @Headers('authorization') authHeader: string,
+    @Headers('Authorization') authHeader: string,
   ) {
     const createdWoku = await this.wokusService.createWoku(
       createWokuDTO,

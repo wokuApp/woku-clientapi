@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { lastValueFrom } from 'rxjs';
-import FormData from 'form-data';
+import { firstValueFrom } from 'rxjs';
+import * as FormData from 'form-data';
 
 import {
   CreateWokuDTO,
@@ -15,32 +15,42 @@ export class WokusService {
   constructor(private readonly httpService: HttpService) {}
 
   async createWoku(createWokuDTO: CreateWokuDTO, authHeader: string) {
-    const wokuData = {
+    const data = {
       ...createWokuDTO,
       auth: authHeader,
     };
 
-    const createdWoku$ = this.httpService.post('/create-woku', wokuData);
-    const createdWoku = await lastValueFrom(createdWoku$);
+    const createdWoku$ = this.httpService.post('/create-woku', data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const createdWoku = await firstValueFrom(createdWoku$);
 
-    return createdWoku;
+    return createdWoku.data;
   }
 
   async getWokuReview(wokuId: GetWokuReviewDTO['wokuId']) {
     const wokuReview$ = this.httpService.get(`/review/${wokuId}`);
-    const wokuReview = await lastValueFrom(wokuReview$);
+    const wokuReview = await firstValueFrom(wokuReview$);
 
-    return wokuReview;
+    return wokuReview.data;
   }
 
   async createTextnote(createTextnoteDTO: CreateTextnoteDTO) {
-    const updatedWoku$ = this.httpService.post(
-      '/create-textnote',
-      createTextnoteDTO,
-    );
-    const updatedWoku = await lastValueFrom(updatedWoku$);
+    const data = {
+      ...createTextnoteDTO,
+    };
 
-    return updatedWoku;
+    const updatedWoku$ = this.httpService.post('/create-textnote', data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const updatedWoku = await firstValueFrom(updatedWoku$);
+
+    return updatedWoku.data;
   }
 
   async createVoicemail(
@@ -59,12 +69,13 @@ export class WokusService {
 
     const updatedWoku$ = this.httpService.post('/create-voicemail', formData, {
       headers: {
+        'Content-Type': 'multipart/form-data',
         ...formData.getHeaders(),
       },
     });
 
-    const updatedWoku = await lastValueFrom(updatedWoku$);
+    const updatedWoku = await firstValueFrom(updatedWoku$);
 
-    return updatedWoku;
+    return updatedWoku.data;
   }
 }

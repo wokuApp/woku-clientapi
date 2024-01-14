@@ -42,15 +42,15 @@ export class WokusService {
       ...createTextnoteDTO,
     };
 
-    const updatedWoku$ = this.httpService.post('/create-textnote', data, {
+    const createdTextnote$ = this.httpService.post('/create-textnote', data, {
       headers: {
         'Content-Type': 'application/json',
       },
     });
 
-    const updatedWoku = await firstValueFrom(updatedWoku$);
+    const createdTextnote = await firstValueFrom(createdTextnote$);
 
-    return updatedWoku.data;
+    return createdTextnote.data;
   }
 
   async createVoicemail(
@@ -67,15 +67,19 @@ export class WokusService {
       formData.append('file', file.buffer, file.originalname);
     }
 
-    const updatedWoku$ = this.httpService.post('/create-voicemail', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        ...formData.getHeaders(),
+    const createdVoicemail$ = this.httpService.post(
+      '/create-voicemail',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          ...formData.getHeaders(),
+        },
       },
-    });
+    );
 
-    const updatedWoku = await firstValueFrom(updatedWoku$);
+    const createdVoicemail = await firstValueFrom(createdVoicemail$);
 
-    return updatedWoku.data;
+    return createdVoicemail.data;
   }
 }

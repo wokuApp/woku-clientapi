@@ -31,12 +31,51 @@ export class CreateWokuDTO {
   @ApiProperty({
     description:
       'This field must contain a public URL that includes an image or video file. For optimal performance when sending video, the mp4 format is preferred.',
+    required: false,
     example:
       'https://wokudevfiles.blob.core.windows.net/wokus/cd7f9cf3-c2e4-4ff0-8a96-19ff813f569e1699220394936-image.webp',
   })
   @IsString()
   @IsNotEmpty()
-  file: string;
+  @IsOptional()
+  fileUrl?: string;
+
+  @ApiProperty({
+    description:
+      'This field is optional. Upon completing this field, the woku will be stored in the Company Folder that holds this secondary key.',
+    required: false,
+    example: '17614778-3',
+  })
+  @IsString()
+  @IsOptional()
+  secondaryKey?: string;
+
+  @ApiProperty({
+    description:
+      'This field is optional. By completing this field, an email will be sent to the client inviting them to rate the woku.',
+    required: false,
+    example: 'pedro@empresa.com',
+  })
+  @IsEmail()
+  @IsOptional()
+  clientEmail?: string;
+}
+
+export class CreateWokuFormDataDTO {
+  @ApiProperty({
+    description:
+      'The description cannot have fewer than 3 characters and cannot exceed a maximum of 140 characters.',
+    example: 'Docker Training',
+  })
+  @MinLength(3, {
+    message: 'The description cannot have less than 3 characters.',
+  })
+  @MaxLength(140, {
+    message: 'The description cannot exceed 140 characters.',
+  })
+  @IsString()
+  @IsNotEmpty()
+  description: string;
 
   @ApiProperty({
     description:

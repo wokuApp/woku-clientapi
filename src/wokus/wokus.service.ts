@@ -8,23 +8,55 @@ import {
   GetWokuReviewDTO,
   CreateTextnoteDTO,
   CreateVoicemailDTO,
+  CreateWokuFormDataDTO,
 } from './dto/woku.dto';
 
 @Injectable()
 export class WokusService {
   constructor(private readonly httpService: HttpService) {}
 
-  async createWoku(createWokuDTO: CreateWokuDTO, authHeader: string) {
+  async createWoku(
+    createWokuDTO: CreateWokuDTO | CreateWokuFormDataDTO,
+    authHeader: string,
+    file?: Express.Multer.File | null,
+  ) {
     const data = {
       ...createWokuDTO,
       auth: authHeader,
     };
+
+    if (file) {
+      const formData = new FormData();
+
+      Object.keys(data).forEach((key) => {
+        formData.append(key, data[key]);
+      });
+
+      if (file) {
+        formData.append('file', file.buffer, file.originalname);
+      }
+
+      const createdWokuWithFormData$ = this.httpService.post(
+        '/create-woku-form-data',
+        formData,
+        {
+          headers: {
+            'Content-Type': ['multipart/form-data'],
+            ...formData.getHeaders(),
+          },
+        },
+      );
+      const createdWoku = await firstValueFrom(createdWokuWithFormData$);
+
+      return createdWoku.data;
+    }
 
     const createdWoku$ = this.httpService.post('/create-woku', data, {
       headers: {
         'Content-Type': 'application/json',
       },
     });
+
     const createdWoku = await firstValueFrom(createdWoku$);
 
     return createdWoku.data;

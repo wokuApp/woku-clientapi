@@ -17,6 +17,7 @@ import {
   GetWokuReviewDTO,
   CreateTextnoteDTO,
   CreateVoicemailDTO,
+  CreateWokuFormDataDTO,
 } from './dto/woku.dto';
 
 @ApiTags('wokus')
@@ -24,7 +25,8 @@ import {
 export class WokusController {
   constructor(private readonly wokusService: WokusService) {}
 
-  @Post('/create')
+  @Post('/create-woku')
+  @ApiOperation({ summary: 'Create a woku with file url' })
   async createWoku(
     @Body() createWokuDTO: CreateWokuDTO,
     @Headers('Authorization') authHeader: string,
@@ -37,7 +39,58 @@ export class WokusController {
     return createdWoku;
   }
 
+  @Post('/create-woku-form-data')
+  @UseInterceptors(FileInterceptor('file'))
+  @ApiConsumes('multipart/form-data')
+  @ApiOperation({ summary: 'Create a woku with form-data' })
+  @ApiBody({
+    description: 'Data to create a woku with binary file.',
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+          description:
+            'Image or Video file. For optimal performance when sending video, the mp4 format is preferred.',
+        },
+        description: {
+          type: 'string',
+          description:
+            'The description cannot have fewer than 3 characters and cannot exceed a maximum of 140 characters.',
+          example: 'Docker Training',
+        },
+        secondaryKey: {
+          type: 'string',
+          description:
+            'This field is optional. Upon completing this field, the woku will be stored in the Company Folder that holds this secondary key.',
+          example: '17614778-3',
+        },
+        clientEmail: {
+          type: 'string',
+          description:
+            'This field is optional. By completing this field, an email will be sent to the client inviting them to rate the woku.',
+          example: 'pedro@empesa.com',
+        },
+      },
+    },
+  })
+  async createWokuFormData(
+    @Body() createWokuFormDataDTO: CreateWokuFormDataDTO,
+    @Headers('Authorization') authHeader: string,
+    @UploadedFile() file: Express.Multer.File | null,
+  ) {
+    const createdWoku = await this.wokusService.createWoku(
+      createWokuFormDataDTO,
+      authHeader,
+      file,
+    );
+
+    return createdWoku;
+  }
+
   @Get('/review/:wokuId')
+  @ApiOperation({ summary: 'Get the woku data for review visualization' })
   async getWokuReview(@Param('wokuId') wokuId: GetWokuReviewDTO['wokuId']) {
     const wokuReview = await this.wokusService.getWokuReview(wokuId);
 
@@ -45,6 +98,7 @@ export class WokusController {
   }
 
   @Post('/create-textnote')
+  @ApiOperation({ summary: 'Create a Textnote' })
   async createTextnote(@Body() createTextnoteDTO: CreateTextnoteDTO) {
     const updatedWoku =
       await this.wokusService.createTextnote(createTextnoteDTO);

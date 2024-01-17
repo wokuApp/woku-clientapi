@@ -58,7 +58,7 @@ $ npm run test:watch
    Default development branch. Dockerized and hosted on Azure Container Registry and deployed on Azure App Service. Access the API in development at [https://woku-clientapi-dev.azurewebsites.net](https://woku-clientapi-dev.azurewebsites.net).
 
 2. **Main Branch**:
-   Similar DevOps as develop. Uses the woku production database on Atlas MongoDB (named woku). Production API available at [https://api.woku.app](https://api.woku.app).
+   Similar DevOps as develop. Production API available at [https://clientapi.woku.app](https://clientapi.woku.app).
 
 ## Documentation
 

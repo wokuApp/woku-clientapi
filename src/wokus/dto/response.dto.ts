@@ -135,7 +135,6 @@ export class WokuDTO extends Document {
       {
         qualification: { _id: 'Qualification ID', qualification: 4 },
         anonymous: false,
-        description: 'Excellent',
         file: {
           filename: 'audio-review-6596d27998ebf3609b208f4b',
           type: 'audio',
@@ -204,7 +203,6 @@ export class WokuReviewDTO {
             qualification: 4,
           },
           anonymous: false,
-          description: 'Excellent',
           file: {
             filename: 'audio-review-6596d27998ebf3609b208f4b',
             type: 'audio',

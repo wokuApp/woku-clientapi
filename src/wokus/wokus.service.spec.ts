@@ -3,6 +3,7 @@ import { WokusService } from './wokus.service';
 import { HttpService } from '@nestjs/axios';
 import { of } from 'rxjs';
 import { AxiosResponse } from 'axios';
+import { UtilsService } from './utils.service';
 
 import {
   CreateWokuDTO,
@@ -27,6 +28,7 @@ describe('WokusService', () => {
             get: jest.fn(),
           },
         },
+        UtilsService,
       ],
     }).compile();
 
@@ -105,13 +107,16 @@ describe('WokusService', () => {
         headers: {},
         config: {} as any,
       };
+      const authHeader: string = 'Company Key';
       jest.spyOn(httpService, 'get').mockImplementation(() => of(mockResponse));
 
       const wokuId: GetWokuReviewDTO['wokuId'] = 'some-id';
-      const result = await service.getWokuReview(wokuId);
+      const result = await service.getWokuReview(wokuId, authHeader);
 
       expect(result).toBe(mockResponse.data);
-      expect(httpService.get).toHaveBeenCalledWith(`/review/${wokuId}`);
+      expect(httpService.get).toHaveBeenCalledWith(
+        `/review/${wokuId}/${authHeader}`,
+      );
     });
   });
 
@@ -129,7 +134,11 @@ describe('WokusService', () => {
         .mockImplementation(() => of(mockResponse));
 
       const createTextnoteDTO = new CreateTextnoteDTO(); // Add test data as needed
-      const result = await service.createTextnote(createTextnoteDTO);
+      const authHeader: string = 'Company Key';
+      const result = await service.createTextnote(
+        createTextnoteDTO,
+        authHeader,
+      );
 
       expect(result).toBe(mockResponse.data);
       expect(httpService.post).toHaveBeenCalled();
@@ -162,7 +171,12 @@ describe('WokusService', () => {
         stream: null,
         buffer: Buffer.from([]),
       };
-      const result = await service.createVoicemail(createVoicemailDTO, file);
+      const authHeader: string = 'Company Key';
+      const result = await service.createVoicemail(
+        createVoicemailDTO,
+        file,
+        authHeader,
+      );
 
       expect(result).toBe(mockResponse.data);
       expect(httpService.post).toHaveBeenCalled();

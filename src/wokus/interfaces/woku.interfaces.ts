@@ -24,11 +24,11 @@ export interface WokuTextnote extends Document {
   values?: string[];
   description: string;
   feedbackType?: string;
+  clientId: string;
 }
 
 export interface WokuQualification extends Document {
   qualification: number;
-  createdBy?: string;
 }
 
 export interface TextnoteQualification extends Document {
@@ -39,8 +39,6 @@ export interface WokuFile extends Document {
   filename: string;
   type: string;
   url?: string;
-  blobName?: string;
-  private: boolean;
 }
 
 export interface VoicemailQualification extends Document {
@@ -60,9 +58,10 @@ export interface WokuVoicemail extends Document {
   createdBy: string;
   anonymous: boolean;
   values?: string[];
-  transcript?: string;
+  transcription?: string;
   feedbackType?: string;
   file: VoicemailFile;
+  clientId: string;
 }
 
 export interface Woku extends Document {
@@ -117,7 +116,7 @@ export interface Voicemail extends Document {
   wokuId: string;
   anonymous: boolean;
   values?: string[];
-  transcript?: string;
+  transcription?: string;
   feedbackType?: string;
   file: VoicemailFile;
   clientId?: string;

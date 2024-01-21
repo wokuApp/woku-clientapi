@@ -10,7 +10,7 @@ import {
   GetWokuReviewDTO,
   CreateVoicemailDTO,
   CreateWokuFormDataDTO,
-} from './dto/woku.dto';
+} from './dto/request.dto';
 
 describe('WokusService', () => {
   let service: WokusService;

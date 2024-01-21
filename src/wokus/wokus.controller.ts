@@ -9,7 +9,15 @@ import {
   Headers,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiTags, ApiConsumes, ApiBody, ApiOperation } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiConsumes,
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiHeader,
+  ApiResponse,
+} from '@nestjs/swagger';
 
 import { WokusService } from './wokus.service';
 import {
@@ -18,7 +26,20 @@ import {
   CreateTextnoteDTO,
   CreateVoicemailDTO,
   CreateWokuFormDataDTO,
-} from './dto/woku.dto';
+} from './dto/request.dto';
+import {
+  Textnote,
+  Voicemail,
+  Woku,
+  WokuReview,
+} from './interfaces/woku.interfaces';
+
+import {
+  TextnoteDTO,
+  VoicemailDTO,
+  WokuDTO,
+  WokuReviewDTO,
+} from './dto/response.dto';
 
 @ApiTags('wokus')
 @Controller('wokus')
@@ -27,10 +48,16 @@ export class WokusController {
 
   @Post('/create-woku')
   @ApiOperation({ summary: 'Create a woku with file url' })
+  @ApiHeader({ name: 'Authorization', description: 'Company Key' })
+  @ApiResponse({
+    status: 200,
+    description: 'woku created successfully.',
+    type: WokuDTO,
+  })
   async createWoku(
     @Body() createWokuDTO: CreateWokuDTO,
     @Headers('Authorization') authHeader: string,
-  ) {
+  ): Promise<Woku> {
     const createdWoku = await this.wokusService.createWoku(
       createWokuDTO,
       authHeader,
@@ -75,11 +102,17 @@ export class WokusController {
       },
     },
   })
+  @ApiHeader({ name: 'Authorization', description: 'Company Key' })
+  @ApiResponse({
+    status: 200,
+    description: 'woku created successfully.',
+    type: WokuDTO,
+  })
   async createWokuFormData(
     @Body() createWokuFormDataDTO: CreateWokuFormDataDTO,
     @Headers('Authorization') authHeader: string,
     @UploadedFile() file: Express.Multer.File | null,
-  ) {
+  ): Promise<Woku> {
     const createdWoku = await this.wokusService.createWoku(
       createWokuFormDataDTO,
       authHeader,
@@ -91,19 +124,47 @@ export class WokusController {
 
   @Get('/review/:wokuId')
   @ApiOperation({ summary: 'Get the woku data for review visualization' })
-  async getWokuReview(@Param('wokuId') wokuId: GetWokuReviewDTO['wokuId']) {
-    const wokuReview = await this.wokusService.getWokuReview(wokuId);
+  @ApiParam({
+    name: 'wokuId',
+    type: String,
+    description: 'ID of the woku to review',
+  })
+  @ApiHeader({ name: 'Authorization', description: 'Company Key' })
+  @ApiResponse({
+    status: 200,
+    description: 'Data of the woku review successfully obtained.',
+    type: WokuReviewDTO,
+  })
+  async getWokuReview(
+    @Param('wokuId') wokuId: GetWokuReviewDTO['wokuId'],
+    @Headers('Authorization') authHeader: string,
+  ): Promise<WokuReview> {
+    const wokuReview = await this.wokusService.getWokuReview(
+      wokuId,
+      authHeader,
+    );
 
     return wokuReview;
   }
 
   @Post('/create-textnote')
   @ApiOperation({ summary: 'Create a Textnote' })
-  async createTextnote(@Body() createTextnoteDTO: CreateTextnoteDTO) {
-    const updatedWoku =
-      await this.wokusService.createTextnote(createTextnoteDTO);
+  @ApiHeader({ name: 'Authorization', description: 'Company Key' })
+  @ApiResponse({
+    status: 200,
+    description: 'Textnote created successfully.',
+    type: TextnoteDTO,
+  })
+  async createTextnote(
+    @Body() createTextnoteDTO: CreateTextnoteDTO,
+    @Headers('Authorization') authHeader: string,
+  ): Promise<Textnote> {
+    const createdTextnote = await this.wokusService.createTextnote(
+      createTextnoteDTO,
+      authHeader,
+    );
 
-    return updatedWoku;
+    return createdTextnote;
   }
 
   @Post('/create-voicemail')
@@ -146,15 +207,23 @@ export class WokusController {
       },
     },
   })
+  @ApiHeader({ name: 'Authorization', description: 'Company Key' })
+  @ApiResponse({
+    status: 200,
+    description: 'Voicemail created successfully.',
+    type: VoicemailDTO,
+  })
   async createVoicemail(
     @UploadedFile() file: Express.Multer.File,
     @Body() createVoicemailDTO: CreateVoicemailDTO,
-  ) {
+    @Headers('Authorization') authHeader: string,
+  ): Promise<Voicemail> {
     const createVoicemailData = { ...createVoicemailDTO };
 
     const updatedWoku = await this.wokusService.createVoicemail(
       createVoicemailData,
       file,
+      authHeader,
     );
 
     return updatedWoku;

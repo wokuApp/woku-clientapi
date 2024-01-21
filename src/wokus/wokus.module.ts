@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { WokusService } from './wokus.service';
 import { WokusController } from './wokus.controller';
+import { UtilsService } from './utils.service';
 
 @Module({
   imports: [
@@ -16,6 +17,6 @@ import { WokusController } from './wokus.controller';
     }),
   ],
   controllers: [WokusController],
-  providers: [WokusService],
+  providers: [WokusService, UtilsService],
 })
 export class WokusModule {}

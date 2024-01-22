@@ -97,37 +97,4 @@ export class WokusService {
 
     return createdTextnote.data;
   }
-
-  //   async createVoicemail(
-  //     createVoicemailDTO: CreateVoicemailDTO,
-  //     file: Express.Multer.File,
-  //     authHeader: string,
-  //   ): Promise<Voicemail> {
-  //     const formData = new FormData();
-
-  //     Object.keys(createVoicemailDTO).forEach((key) => {
-  //       formData.append(key, createVoicemailDTO[key]);
-  //     });
-
-  //     formData.append('authHeader', authHeader);
-
-  //     if (file) {
-  //       formData.append('file', file.buffer, file.originalname);
-  //     }
-
-  //     const createdVoicemail$ = this.httpService.post(
-  //       '/create-voicemail',
-  //       formData,
-  //       {
-  //         headers: {
-  //           'Content-Type': 'multipart/form-data',
-  //           ...formData.getHeaders(),
-  //         },
-  //       },
-  //     );
-
-  //     const createdVoicemail = await firstValueFrom(createdVoicemail$);
-
-  //     return createdVoicemail.data;
-  //   }
 }

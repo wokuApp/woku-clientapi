@@ -6,7 +6,7 @@ import {
   Param,
   UseInterceptors,
   UploadedFile,
-  Headers,
+  Req,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
@@ -15,9 +15,10 @@ import {
   ApiBody,
   ApiOperation,
   ApiParam,
-  ApiHeader,
   ApiResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
+import { Request } from 'express';
 
 import { WokusService } from './wokus.service';
 import {
@@ -27,7 +28,6 @@ import {
   CreateWokuFormDataDTO,
 } from './dto/request.dto';
 import { Textnote, Woku, WokuReview } from './interfaces/woku.interfaces';
-
 import { TextnoteDTO, WokuDTO, WokuReviewDTO } from './dto/response.dto';
 
 @ApiTags('wokus')
@@ -35,9 +35,9 @@ import { TextnoteDTO, WokuDTO, WokuReviewDTO } from './dto/response.dto';
 export class WokusController {
   constructor(private readonly wokusService: WokusService) {}
 
+  @ApiBearerAuth()
   @Post('/create-woku')
   @ApiOperation({ summary: 'Create a woku with file url' })
-  @ApiHeader({ name: 'Authorization', description: 'Company Key' })
   @ApiResponse({
     status: 200,
     description: 'woku created successfully.',
@@ -45,16 +45,17 @@ export class WokusController {
   })
   async createWoku(
     @Body() createWokuDTO: CreateWokuDTO,
-    @Headers('Authorization') authHeader: string,
+    @Req() req: Request,
   ): Promise<Woku> {
     const createdWoku = await this.wokusService.createWoku(
       createWokuDTO,
-      authHeader,
+      req.headers.authorization,
     );
 
     return createdWoku;
   }
 
+  @ApiBearerAuth()
   @Post('/create-woku-form-data')
   @UseInterceptors(FileInterceptor('file'))
   @ApiConsumes('multipart/form-data')
@@ -91,7 +92,6 @@ export class WokusController {
       },
     },
   })
-  @ApiHeader({ name: 'Authorization', description: 'Company Key' })
   @ApiResponse({
     status: 200,
     description: 'woku created successfully.',
@@ -99,18 +99,19 @@ export class WokusController {
   })
   async createWokuFormData(
     @Body() createWokuFormDataDTO: CreateWokuFormDataDTO,
-    @Headers('Authorization') authHeader: string,
     @UploadedFile() file: Express.Multer.File | null,
+    @Req() req: Request,
   ): Promise<Woku> {
     const createdWoku = await this.wokusService.createWoku(
       createWokuFormDataDTO,
-      authHeader,
+      req.headers.authorization,
       file,
     );
 
     return createdWoku;
   }
 
+  @ApiBearerAuth()
   @Get('/review/:wokuId')
   @ApiOperation({ summary: 'Get the woku data for review visualization' })
   @ApiParam({
@@ -118,7 +119,6 @@ export class WokusController {
     type: String,
     description: 'ID of the woku to review',
   })
-  @ApiHeader({ name: 'Authorization', description: 'Company Key' })
   @ApiResponse({
     status: 200,
     description: 'Data of the woku review successfully obtained.',
@@ -126,19 +126,19 @@ export class WokusController {
   })
   async getWokuReview(
     @Param('wokuId') wokuId: GetWokuReviewDTO['wokuId'],
-    @Headers('Authorization') authHeader: string,
+    @Req() req: Request,
   ): Promise<WokuReview> {
     const wokuReview = await this.wokusService.getWokuReview(
       wokuId,
-      authHeader,
+      req.headers.authorization,
     );
 
     return wokuReview;
   }
 
+  @ApiBearerAuth()
   @Post('/create-textnote')
   @ApiOperation({ summary: 'Create a Textnote' })
-  @ApiHeader({ name: 'Authorization', description: 'Company Key' })
   @ApiResponse({
     status: 200,
     description: 'Textnote created successfully.',
@@ -146,11 +146,11 @@ export class WokusController {
   })
   async createTextnote(
     @Body() createTextnoteDTO: CreateTextnoteDTO,
-    @Headers('Authorization') authHeader: string,
+    @Req() req: Request,
   ): Promise<Textnote> {
     const createdTextnote = await this.wokusService.createTextnote(
       createTextnoteDTO,
-      authHeader,
+      req.headers.authorization,
     );
 
     return createdTextnote;

@@ -30,7 +30,7 @@ A Company Key is provided to the company owner in woku. This key must be include
 
 ### URL
 
-`https://api-client.woku.app/wokus/create-woku`
+`https://clientapi.woku.app/wokus/create-woku`
 
 ### Method
 
@@ -75,7 +75,7 @@ POST
 
 ### URL
 
-`https://api-client.woku.app/wokus/create-woku-form-data`
+`https://clientapi.woku.app/wokus/create-woku-form-data`
 
 ### Method
 
@@ -107,7 +107,7 @@ POST
 
 ### URL
 
-`https://api-client.woku.app/wokus/review/{wokuId}`
+`https://clientapi.woku.app/wokus/review/{wokuId}`
 
 ### Method
 
@@ -126,14 +126,14 @@ GET
 
 ### Expected Responses
 
-- `200` -> Created woku object
+- `200` -> Created woku review object
 - `500 Internal server error`
 
 ## Endpoint to Create Textnote
 
 ### URL
 
-`https://api-client.woku.app/wokus/create-textnote`
+`https://clientapi.woku.app/wokus/create-textnote`
 
 ### Method
 

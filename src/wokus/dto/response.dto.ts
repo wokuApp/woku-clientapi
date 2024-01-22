@@ -104,49 +104,19 @@ export class WokuDTO extends Document {
 
   @ApiProperty({
     description: 'Array with the Qualifications received from the woku.',
-    example: [
-      {
-        _id: 'Qualification ID',
-        qualification: 4,
-      },
-    ],
+    example: [],
   })
   qualifications?: WokuQualificationDTO[];
 
   @ApiProperty({
     description: 'Array with the Textnotes received from the woku.',
-    example: [
-      {
-        qualification: { _id: 'Qualification ID', qualification: 4 },
-        anonymous: false,
-        description: 'Excellent',
-        feedbackType: 'recognition',
-        clientId: 'Client ID',
-        _id: 'Textnote ID',
-        createdAt: '2023-10-29T02:26:38.341+00:00',
-      },
-    ],
+    example: [],
   })
   textnotes?: WokuTextnoteDTO[];
 
   @ApiProperty({
     description: 'Array with the Voicemails received from the woku.',
-    example: [
-      {
-        qualification: { _id: 'Qualification ID', qualification: 4 },
-        anonymous: false,
-        file: {
-          filename: 'audio-review-6596d27998ebf3609b208f4b',
-          type: 'audio',
-          url: 'https://wokudevfiles.blob.core.windows.net/wokus/28a591ae-0d65-40bb-8e4d-687c9bb75397blob',
-        },
-        transcription: 'hola todo está súper bien me gustó todo',
-        feedbackType: 'recognition',
-        clientId: 'Client  ID',
-        _id: 'Voicemail ID',
-        createdAt: '2023-10-29T02:26:38.341+00:00',
-      },
-    ],
+    example: [],
   })
   voicemails?: WokuVoicemailDTO[];
 
@@ -156,6 +126,10 @@ export class WokuDTO extends Document {
   })
   feedbacksSummary?: string;
 
+  @ApiProperty({
+    description: 'Folder ID.',
+    example: '6546d641f6258948f2d34b95',
+  })
   folderId: string;
 }
 

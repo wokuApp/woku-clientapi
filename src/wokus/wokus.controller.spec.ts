@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpModule } from '@nestjs/axios';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { Request } from 'express';
 
 import { WokusController } from './wokus.controller';
 import { WokusService } from './wokus.service';
@@ -55,6 +56,7 @@ describe('WokusController', () => {
   describe('createWoku', () => {
     it('should create a woku', async () => {
       const dto = new CreateWokuDTO();
+      const req = { headers: { authorization: 'company key' } } as Request;
       const result = {
         _id: '65348875f3a876254aa82d5e',
         description: 'Docker Training',
@@ -106,7 +108,7 @@ describe('WokusController', () => {
       jest
         .spyOn(wokusService, 'createWoku')
         .mockImplementation(async () => result);
-      expect(await controller.createWoku(dto, 'authHeader')).toBe(result);
+      expect(await controller.createWoku(dto, req)).toBe(result);
     });
   });
 
@@ -125,6 +127,7 @@ describe('WokusController', () => {
         stream: null,
         buffer: Buffer.from([]),
       };
+      const req = { headers: { authorization: 'company key' } } as Request;
       const result = {
         _id: '65348875f3a876254aa82d5e',
         description: 'Docker Training',
@@ -176,16 +179,14 @@ describe('WokusController', () => {
       jest
         .spyOn(wokusService, 'createWoku')
         .mockImplementation(async () => result);
-      expect(await controller.createWokuFormData(dto, 'authHeader', file)).toBe(
-        result,
-      );
+      expect(await controller.createWokuFormData(dto, file, req)).toBe(result);
     });
   });
 
   describe('getWokuReview', () => {
     it('should retrieve a woku review', async () => {
       const wokuId: GetWokuReviewDTO['wokuId'] = 'some-id';
-      const authHeader: string = 'Company Key';
+      const req = { headers: { authorization: 'company key' } } as Request;
       const result: WokuReview = {
         woku: {
           _id: '65348875f3a876254aa82d5e',
@@ -254,14 +255,14 @@ describe('WokusController', () => {
       jest
         .spyOn(wokusService, 'getWokuReview')
         .mockImplementation(async () => result);
-      expect(await controller.getWokuReview(wokuId, authHeader)).toBe(result);
+      expect(await controller.getWokuReview(wokuId, req)).toBe(result);
     });
   });
 
   describe('createTextnote', () => {
     it('should create a textnote', async () => {
       const dto = new CreateTextnoteDTO();
-      const authHeader: string = 'Company Key';
+      const req = { headers: { authorization: 'company key' } } as Request;
       const result = {
         qualification: {
           _id: 'Qualification ID',
@@ -276,7 +277,7 @@ describe('WokusController', () => {
       jest
         .spyOn(wokusService, 'createTextnote')
         .mockImplementation(async () => result);
-      expect(await controller.createTextnote(dto, authHeader)).toBe(result);
+      expect(await controller.createTextnote(dto, req)).toBe(result);
     });
   });
 });

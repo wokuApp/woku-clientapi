@@ -279,45 +279,4 @@ describe('WokusController', () => {
       expect(await controller.createTextnote(dto, authHeader)).toBe(result);
     });
   });
-
-  // describe('createVoicemail', () => {
-  //   it('should create a voicemail', async () => {
-  //     const dto = new CreateVoicemailDTO();
-  //     const authHeader: string = 'Company Key';
-  //     const file: Express.Multer.File = {
-  //       fieldname: 'fieldname',
-  //       originalname: 'originalname',
-  //       encoding: 'encoding',
-  //       mimetype: 'mimetype',
-  //       size: 0,
-  //       destination: 'destination',
-  //       filename: 'filename',
-  //       path: 'path',
-  //       stream: null,
-  //       buffer: Buffer.from([]),
-  //     };
-  //     const result = {
-  //       qualification: {
-  //         qualification: 4,
-  //       } as VoicemailQualification,
-  //       wokuId: '65348875f3a876254aa82d5e',
-  //       anonymous: false,
-  //       transcription: 'hola todo está súper bien me gustó todo',
-  //       feedbackType: 'recognition',
-  //       file: {
-  //         filename: 'audio-review-6596d27998ebf3609b208f4b',
-  //         type: 'audio',
-  //         url: 'https://wokudevfiles.blob.core.windows.net/wokus/28a591ae-0d65-40bb-8e4d-687c9bb75397blob',
-  //       } as VoicemailFile,
-  //       clientId: '653c78b70c83744b1340a551',
-  //     } as Voicemail;
-
-  //     jest
-  //       .spyOn(wokusService, 'createVoicemail')
-  //       .mockImplementation(async () => result);
-  //     expect(await controller.createVoicemail(file, dto, authHeader)).toBe(
-  //       result,
-  //     );
-  //   });
-  // });
 });

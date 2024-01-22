@@ -303,57 +303,57 @@ export class TextnoteDTO extends Document {
   clientId?: string;
 }
 
-export class VoicemailDTO extends Document {
-  @ApiProperty({
-    description: 'Voicemail Qualification',
-    example: {
-      _id: 'Qualification ID',
-      qualification: 4,
-    },
-  })
-  qualification: VoicemailQualificationDTO;
+// export class VoicemailDTO extends Document {
+//   @ApiProperty({
+//     description: 'Voicemail Qualification',
+//     example: {
+//       _id: 'Qualification ID',
+//       qualification: 4,
+//     },
+//   })
+//   qualification: VoicemailQualificationDTO;
 
-  createdBy?: string;
+//   createdBy?: string;
 
-  @ApiProperty({
-    description: 'Woku ID',
-    example: '65348875f3a876254aa82d5e',
-  })
-  wokuId: string;
+//   @ApiProperty({
+//     description: 'Woku ID',
+//     example: '65348875f3a876254aa82d5e',
+//   })
+//   wokuId: string;
 
-  @ApiProperty({
-    description: 'Anonymous state',
-    example: false,
-  })
-  anonymous: boolean;
+//   @ApiProperty({
+//     description: 'Anonymous state',
+//     example: false,
+//   })
+//   anonymous: boolean;
 
-  values?: string[];
+//   values?: string[];
 
-  @ApiProperty({
-    description: 'Audio transcription',
-    example: 'hola todo está súper bien me gustó todo',
-  })
-  transcription?: string;
+//   @ApiProperty({
+//     description: 'Audio transcription',
+//     example: 'hola todo está súper bien me gustó todo',
+//   })
+//   transcription?: string;
 
-  @ApiProperty({
-    description: 'Feedaback type',
-    example: 'recognition',
-  })
-  feedbackType?: string;
+//   @ApiProperty({
+//     description: 'Feedaback type',
+//     example: 'recognition',
+//   })
+//   feedbackType?: string;
 
-  @ApiProperty({
-    description: 'Audio file data',
-    example: {
-      filename: 'audio-review-6596d27998ebf3609b208f4b',
-      type: 'audio',
-      url: 'https://wokudevfiles.blob.core.windows.net/wokus/28a591ae-0d65-40bb-8e4d-687c9bb75397blob',
-    },
-  })
-  file: VoicemailFileDTO;
+//   @ApiProperty({
+//     description: 'Audio file data',
+//     example: {
+//       filename: 'audio-review-6596d27998ebf3609b208f4b',
+//       type: 'audio',
+//       url: 'https://wokudevfiles.blob.core.windows.net/wokus/28a591ae-0d65-40bb-8e4d-687c9bb75397blob',
+//     },
+//   })
+//   file: VoicemailFileDTO;
 
-  @ApiProperty({
-    description: 'Client ID',
-    example: '653c78b70c83744b1340a551',
-  })
-  clientId?: string;
-}
+//   @ApiProperty({
+//     description: 'Client ID',
+//     example: '653c78b70c83744b1340a551',
+//   })
+//   clientId?: string;
+// }

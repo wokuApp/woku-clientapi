@@ -1,0 +1,24 @@
+name: Build and Push to Azure Container Registry
+
+on:
+  push:
+    branches: ['develop']
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to Azure Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: wokuclientapidev.azurecr.io
+          username: ${{ secrets.AZURE_CONTAINER_REGISTRY_USERNAME_DEV }}
+          password: ${{ secrets.AZURE_CONTAINER_REGISTRY_PASSWORD_DEV }}
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t wokuclientapidev.azurecr.io/wokuclientapidev:latest .
+          docker push wokuclientapidev.azurecr.io/wokuclientapidev:latest

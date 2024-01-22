@@ -10,13 +10,13 @@ This is a REST API service that enables company owners within the woku service t
 
 #### Base URL
 
-`https://api-client.woku.app`
+`https://clientapi.woku.app`
 
 ## Authentication
 
 ### Type of Authentication
 
-Company application key.
+Company Key.
 
 ### Obtaining and Using Keys
 
@@ -50,7 +50,7 @@ POST
 
 ### Expected Responses
 
-- `200 OK` -> Created woku object
+- `201 OK` -> Created woku object
 - `400 Bad Request`
 
 ### DTO of the Body
@@ -84,19 +84,19 @@ POST
 
 ### Form Data Request
 
-- **description\*** (string)
+- **description\*** (text)
   - Example: Description of the woku
   - The description cannot have fewer than 3 characters and cannot exceed a maximum of 140 characters.
 - **file\*** ($binary)
   - This field must be a publicly accessible URL to an image or video file.
-- **secondaryKey** (string)
+- **secondaryKey** (text)
   - This is an optional field. This key must be provided by the company owner to a company folder manually in the woku client interface.
-- **clientEmail** (string)
+- **clientEmail** (text)
   - This field must contain a valid email.
 
 ### Expected Responses
 
-- `200 OK` -> Created woku object
+- `201 OK` -> Created woku object
 - `400 Bad Request`
 
 ## Endpoint to Get Review
@@ -154,7 +154,7 @@ POST
 
 ### Expected Responses
 
-- `200 OK` -> Created Textnote object
+- `201 OK` -> Created Textnote object
 - `400 Bad Request`
 
 ### DTO of the Body

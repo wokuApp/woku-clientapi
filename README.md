@@ -62,7 +62,7 @@ $ npm run test:watch
 
 ## Documentation
 
-The `woku-clientapi` is documented using Swagger in NestJS. This documentation covers the various endpoints, expected request/response structures. For more thorough and comprehensive documentation, review [API.md](API.md).
+The `woku-clientapi` is documented using Swagger in NestJS. This documentation covers the various endpoints, expected request/response structures.
 
 You can access the documentation for each environment as follows:
 

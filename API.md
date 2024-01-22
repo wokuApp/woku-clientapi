@@ -2,6 +2,10 @@
 
 This documentation explains the logic of the Rest API for creating and rating wokus in your own application.
 
+## Considerations
+
+The `woku-clientapi` is documented using Swagger in NestJS. The documentation can be found at [https://clientapi.woku.app/documentation](https://clientapi.woku.app/documentation)
+
 ## Introduction
 
 ### General Description

@@ -74,7 +74,7 @@ You can access the documentation for each environment as follows:
 
 The Swagger documentation provides a user-friendly interface, allowing for easy exploration, testing, and interaction with the API endpoints directly through the browser.
 
-Note: A GET request to any main link should return "woku api client ⭐️💬". For local development, set up a .env file in the root of the project with the variable PORT=3000 and specify in the API variable the access to the main woku server in development or production.
+Note: A GET request to any main link should return "woku client api ⭐️💬". For local development, set up a .env file in the root of the project with the variable PORT=3000 and specify in the API variable the access to the main woku server in development or production.
 
 ## Contributing
 

@@ -50,7 +50,7 @@ POST
 
 ### Expected Responses
 
-- `201 OK` -> Created woku object
+- `201` -> Created woku object
 - `500 Internal server error`
 
 ### DTO of the Body
@@ -96,7 +96,7 @@ POST
 
 ### Expected Responses
 
-- `201 OK` -> Created woku object
+- `201` -> Created woku object
 - `500 Internal server error`
 
 ## Endpoint to Get Review
@@ -122,7 +122,7 @@ GET
 
 ### Expected Responses
 
-- `200 OK` -> Created woku object
+- `200` -> Created woku object
 - `500 Internal server error`
 
 ## Endpoint to Create Textnote
@@ -154,7 +154,7 @@ POST
 
 ### Expected Responses
 
-- `201 OK` -> Created Textnote object
+- `201` -> Created Textnote object
 - `500 Internal server error`
 
 ### DTO of the Body

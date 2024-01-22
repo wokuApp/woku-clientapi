@@ -1,4 +1,4 @@
-name: Build and Push to Azure Container Registry
+name: Build and Push to Azure Container Registry Production
 
 on:
   push:

@@ -39,7 +39,7 @@ export class WokusController {
   @Post('/create-woku')
   @ApiOperation({ summary: 'Create a woku with file url' })
   @ApiResponse({
-    status: 200,
+    status: 201,
     description: 'woku created successfully.',
     type: WokuDTO,
   })
@@ -93,7 +93,7 @@ export class WokusController {
     },
   })
   @ApiResponse({
-    status: 200,
+    status: 201,
     description: 'woku created successfully.',
     type: WokuDTO,
   })
@@ -140,7 +140,7 @@ export class WokusController {
   @Post('/create-textnote')
   @ApiOperation({ summary: 'Create a Textnote' })
   @ApiResponse({
-    status: 200,
+    status: 201,
     description: 'Textnote created successfully.',
     type: TextnoteDTO,
   })

@@ -51,7 +51,7 @@ POST
 ### Expected Responses
 
 - `201 OK` -> Created woku object
-- `400 Bad Request`
+- `500 Internal server error`
 
 ### DTO of the Body
 
@@ -97,7 +97,7 @@ POST
 ### Expected Responses
 
 - `201 OK` -> Created woku object
-- `400 Bad Request`
+- `500 Internal server error`
 
 ## Endpoint to Get Review
 
@@ -116,16 +116,16 @@ GET
 
 ### Params
 
-- **wokuId\*** (string)
-  Example: 65348875f3a876254aa82d5e
-  woku ID
+- **wokuId\*** (text)
+  - Example: 65348875f3a876254aa82d5e
+  - woku ID
 
 ### Expected Responses
 
 - `200 OK` -> Created woku object
-- `400 Bad Request`
+- `500 Internal server error`
 
-## Endpoint to Create woku
+## Endpoint to Create Textnote
 
 ### URL
 
@@ -155,11 +155,11 @@ POST
 ### Expected Responses
 
 - `201 OK` -> Created Textnote object
-- `400 Bad Request`
+- `500 Internal server error`
 
 ### DTO of the Body
 
-#### CreateWokuDTO
+#### CreateTextnoteDTO
 
 - **wokuId\*** (string)
   - Example: 65348875f3a876254aa82d5e
@@ -178,8 +178,8 @@ POST
 
 ### Contact
 
-Diego Orrego Brito, CTO of woku
-Email: diego@woku.app (Please include the company name in the subject and mention the API).
+- Diego Orrego Brito, CTO of woku
+- Email: diego@woku.app (Please include the company name in the subject and mention the API).
 
 ## Common Errors and Solutions
 

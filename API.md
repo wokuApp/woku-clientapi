@@ -65,7 +65,7 @@ POST
   - Example: Description of the woku
   - The description cannot have fewer than 3 characters and cannot exceed a maximum of 140 characters.
 - **fileUrl\*** (string)
-  - This field must be a publicly accessible URL to an image or video file.
+  - This field must be a publicly accessible URL to an image or video file. For videos, prefer files with .mp4 extension.
 - **secondaryKey** (string)
   - This is an optional field. This key must be provided by the company owner to a company folder manually in the woku client interface.
 - **clientEmail** (string)
@@ -92,11 +92,11 @@ POST
   - Example: Description of the woku
   - The description cannot have fewer than 3 characters and cannot exceed a maximum of 140 characters.
 - **file\*** ($binary)
-  - This field must be a publicly accessible URL to an image or video file.
+  - This field must be an image or video file. For videos, prefer files with .mp4 extension.
 - **secondaryKey** (text)
   - This is an optional field. This key must be provided by the company owner to a company folder manually in the woku client interface.
 - **clientEmail** (text)
-  - This field must contain a valid email.
+  - This field must contain a valid email. This field is optional.
 
 ### Expected Responses
 
@@ -177,6 +177,39 @@ POST
 - **clientEmail** (string)
   - Example: pedro@empresa.com
   - This field is the email of the client providing the feedback. This field is optional. If this field is not filled out, the anonymous field must be marked as true.
+
+## Endpoint to Create Voicemail with Form Data
+
+### URL
+
+`https://clientapi.woku.app/wokus/create-voicemail`
+
+### Method
+
+POST
+
+### Headers
+
+- `Content-Type: application/json`
+- `Authorization: Bearer <Company-Key>`
+
+### Form Data Request
+
+- **file\*** ($binary)
+  - This field must be a publicly accessible URL to an image or video file.
+- **wokuId** (text)
+  - This field is the ID of a woku in text format.
+- **clientEmail** (text)
+  - This field is the email of the client providing the feedback. This field is optional. If this field is not filled out, the anonymous field must be marked as true.
+- **qualification** (text)
+  - This field is a text that represents an integer between 1 and 5.
+- **anonymous** (text)
+  - This field is a string that represents a boolean, so the only options are true or false. This field is optional. When this field is a true, sends anonymous feedback. When this field is omitted or marked false, the client email must be provided in the clientEmail field.
+
+### Expected Responses
+
+- `201` -> Created woku object
+- `500 Internal server error`
 
 ## Contact and Support
 

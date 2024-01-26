@@ -11,6 +11,7 @@ import {
   CreateTextnoteDTO,
   GetWokuReviewDTO,
   CreateWokuFormDataDTO,
+  CreateVoicemailDTO,
 } from './dto/request.dto';
 import {
   Avatar,
@@ -24,6 +25,7 @@ import {
   WokuReview,
   WokuTextnote,
   WokuVoicemail,
+  Voicemail,
 } from './interfaces/woku.interfaces';
 
 describe('WokusController', () => {
@@ -68,41 +70,9 @@ describe('WokusController', () => {
           type: 'image',
           url: 'https://wokudevfiles.blob.core.windows.net/wokus/cd7f9cf3-c2e4-4ff0-8a96-19ff813f569e1699220394936-image.webp',
         } as WokuFile,
-        qualifications: [
-          {
-            qualification: 4,
-          } as WokuQualification,
-        ],
-        textnotes: [
-          {
-            qualification: {
-              qualification: 4,
-            } as WokuQualification,
-            anonymous: false,
-            description: 'Excellent',
-            feedbackType: 'recognition',
-            clientId: 'Client ID',
-            _id: 'Textnote ID',
-          } as WokuTextnote,
-        ],
-        voicemails: [
-          {
-            qualification: {
-              qualification: 4,
-            } as WokuQualification,
-            anonymous: false,
-            file: {
-              filename: 'audio-review-6596d27998ebf3609b208f4b',
-              type: 'audio',
-              url: 'https://wokudevfiles.blob.core.windows.net/wokus/28a591ae-0d65-40bb-8e4d-687c9bb75397blob',
-            } as VoicemailFile,
-            transcription: 'hola todo está súper bien me gustó todo',
-            feedbackType: 'recognition',
-            clientId: 'Client  ID',
-            _id: 'Voicemail ID',
-          } as WokuVoicemail,
-        ],
-        feedbacksSummary: 'Training with good comments and congratulations',
+        qualifications: [],
+        textnotes: [],
+        voicemails: [],
       } as Woku;
 
       jest
@@ -139,41 +109,9 @@ describe('WokusController', () => {
           type: 'image',
           url: 'https://wokudevfiles.blob.core.windows.net/wokus/cd7f9cf3-c2e4-4ff0-8a96-19ff813f569e1699220394936-image.webp',
         } as WokuFile,
-        qualifications: [
-          {
-            qualification: 4,
-          } as WokuQualification,
-        ],
-        textnotes: [
-          {
-            qualification: {
-              qualification: 4,
-            } as WokuQualification,
-            anonymous: false,
-            description: 'Excellent',
-            feedbackType: 'recognition',
-            clientId: 'Client ID',
-            _id: 'Textnote ID',
-          } as WokuTextnote,
-        ],
-        voicemails: [
-          {
-            qualification: {
-              qualification: 4,
-            } as WokuQualification,
-            anonymous: false,
-            file: {
-              filename: 'audio-review-6596d27998ebf3609b208f4b',
-              type: 'audio',
-              url: 'https://wokudevfiles.blob.core.windows.net/wokus/28a591ae-0d65-40bb-8e4d-687c9bb75397blob',
-            } as VoicemailFile,
-            transcription: 'hola todo está súper bien me gustó todo',
-            feedbackType: 'recognition',
-            clientId: 'Client  ID',
-            _id: 'Voicemail ID',
-          } as WokuVoicemail,
-        ],
-        feedbacksSummary: 'Training with good comments and congratulations',
+        qualifications: [],
+        textnotes: [],
+        voicemails: [],
       } as Woku;
 
       jest
@@ -278,6 +216,45 @@ describe('WokusController', () => {
         .spyOn(wokusService, 'createTextnote')
         .mockImplementation(async () => result);
       expect(await controller.createTextnote(dto, req)).toBe(result);
+    });
+  });
+
+  describe('createVoicemail', () => {
+    it('should create a voicemail', async () => {
+      const dto = new CreateVoicemailDTO();
+      const file: Express.Multer.File = {
+        fieldname: 'fieldname',
+        originalname: 'originalname',
+        encoding: 'encoding',
+        mimetype: 'mimetype',
+        size: 0,
+        destination: 'destination',
+        filename: 'filename',
+        path: 'path',
+        stream: null,
+        buffer: Buffer.from([]),
+      };
+      const req = { headers: { authorization: 'company key' } } as Request;
+      const result = {
+        qualification: {
+          qualification: 4,
+        } as WokuQualification,
+        anonymous: false,
+        file: {
+          filename: 'audio-review-6596d27998ebf3609b208f4b',
+          type: 'audio',
+          url: 'https://wokudevfiles.blob.core.windows.net/wokus/28a591ae-0d65-40bb-8e4d-687c9bb75397blob',
+        } as VoicemailFile,
+        transcription: 'hola todo está súper bien me gustó todo',
+        feedbackType: 'recognition',
+        clientId: 'Client  ID',
+        _id: 'Voicemail ID',
+      } as Voicemail;
+
+      jest
+        .spyOn(wokusService, 'createVoicemail')
+        .mockImplementation(async () => result);
+      expect(await controller.createVoicemail(file, dto, req)).toBe(result);
     });
   });
 });

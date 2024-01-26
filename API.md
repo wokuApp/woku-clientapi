@@ -197,18 +197,18 @@ POST
 
 - **file\*** ($binary)
   - This field must be a publicly accessible URL to an image or video file.
-- **wokuId** (text)
+- **wokuId\*** (text)
   - This field is the ID of a woku in text format.
+- **qualification\*** (text)
+  - This field is a text that represents an integer between 1 and 5.
 - **clientEmail** (text)
   - This field is the email of the client providing the feedback. This field is optional. If this field is not filled out, the anonymous field must be marked as true.
-- **qualification** (text)
-  - This field is a text that represents an integer between 1 and 5.
 - **anonymous** (text)
   - This field is a string that represents a boolean, so the only options are true or false. This field is optional. When this field is a true, sends anonymous feedback. When this field is omitted or marked false, the client email must be provided in the clientEmail field.
 
 ### Expected Responses
 
-- `201` -> Created woku object
+- `201` -> Created voicemail object
 - `500 Internal server error`
 
 ## Contact and Support

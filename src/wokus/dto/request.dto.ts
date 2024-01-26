@@ -8,6 +8,8 @@ import {
   IsString,
   MinLength,
   MaxLength,
+  IsIn,
+  IsEmpty,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -152,4 +154,44 @@ export class CreateTextnoteDTO {
   @IsBoolean()
   @IsOptional()
   anonymous?: boolean;
+}
+
+export class CreateVoicemailDTO {
+  @ApiProperty({
+    description: 'This field is the ID of a woku in string format.',
+    example: '65348875f3a876254aa82d5e',
+  })
+  @IsNotEmpty()
+  @IsMongoId()
+  wokuId: string;
+
+  @ApiProperty({
+    description:
+      'This field is a string that represents an integer between 1 and 5.',
+    example: '5',
+  })
+  @IsIn(['1', '2', '3', '4', '5'])
+  @IsNotEmpty()
+  qualification: string;
+
+  @ApiProperty({
+    description:
+      'This field is the email of the client providing the feedback, it is optional. If this field is not filled out, the anonymous field must be marked as true.',
+    example: 'pedro@empresa.com',
+    required: false,
+  })
+  @IsEmail()
+  @IsEmpty()
+  @IsOptional()
+  clientEmail?: string;
+
+  @ApiProperty({
+    description:
+      'This field is a string that represents a boolean, so the only options are true or false. When this field is a true, sends anonymous feedback. When this field is omitted or marked false, the client email must be provided in the clientEmail field.',
+    example: 'false',
+    required: false,
+  })
+  @IsIn(['true', 'false', ''])
+  @IsOptional()
+  anonymous?: string;
 }

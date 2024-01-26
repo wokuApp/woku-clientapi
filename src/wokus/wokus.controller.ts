@@ -26,9 +26,15 @@ import {
   GetWokuReviewDTO,
   CreateTextnoteDTO,
   CreateWokuFormDataDTO,
+  CreateVoicemailDTO,
 } from './dto/request.dto';
 import { Textnote, Woku, WokuReview } from './interfaces/woku.interfaces';
-import { TextnoteDTO, WokuDTO, WokuReviewDTO } from './dto/response.dto';
+import {
+  TextnoteDTO,
+  WokuDTO,
+  WokuReviewDTO,
+  VoicemailDTO,
+} from './dto/response.dto';
 
 @ApiTags('wokus')
 @Controller('wokus')
@@ -154,5 +160,67 @@ export class WokusController {
     );
 
     return createdTextnote;
+  }
+
+  @ApiBearerAuth()
+  @Post('/create-voicemail')
+  @UseInterceptors(FileInterceptor('file'))
+  @ApiConsumes('multipart/form-data')
+  @ApiOperation({ summary: 'Create a Voicemail' })
+  @ApiBody({
+    description: 'Data to create a Voicemail.',
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+          description: 'Audio file.',
+        },
+        wokuId: {
+          type: 'string',
+          description: 'This field is the ID of a woku in string format.',
+          example: '65348875f3a876254aa82d5e',
+        },
+        qualification: {
+          type: 'string',
+          description:
+            'This field is a string that represents an integer between 1 and 5.',
+          example: '5',
+        },
+        clientEmail: {
+          type: 'string',
+          description:
+            'This field is the email of the client providing the feedback. This field is optional. If this field is not filled out, the anonymous field must be marked as true.',
+          example: 'pedro@empesa.com',
+        },
+        anonymous: {
+          type: 'string',
+          description:
+            'This field is a string that represents a boolean, so the only options are true or false. This field is optional. When this field is a true, sends anonymous feedback. When this field is omitted or marked false, the client email must be provided in the clientEmail field.',
+          example: 'false',
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Voicemail created successfully.',
+    type: VoicemailDTO,
+  })
+  async createVoicemail(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() createVoicemailDTO: CreateVoicemailDTO,
+    @Req() req: Request,
+  ): Promise<VoicemailDTO> {
+    const createVoicemailData = { ...createVoicemailDTO };
+
+    const updatedWoku = await this.wokusService.createVoicemail(
+      createVoicemailData,
+      file,
+      req.headers.authorization,
+    );
+
+    return updatedWoku;
   }
 }

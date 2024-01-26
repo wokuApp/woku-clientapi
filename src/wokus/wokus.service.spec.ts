@@ -10,6 +10,7 @@ import {
   CreateTextnoteDTO,
   GetWokuReviewDTO,
   CreateWokuFormDataDTO,
+  CreateVoicemailDTO,
 } from './dto/request.dto';
 
 describe('WokusService', () => {
@@ -43,7 +44,7 @@ describe('WokusService', () => {
     it('should create a woku with file url', async () => {
       const mockResponse: AxiosResponse<any> = {
         data: {},
-        status: 200,
+        status: 201,
         statusText: 'OK',
         headers: {},
         config: {} as any,
@@ -64,7 +65,7 @@ describe('WokusService', () => {
     it('should create a woku with file url', async () => {
       const mockResponse: AxiosResponse<any> = {
         data: {},
-        status: 200,
+        status: 201,
         statusText: 'OK',
         headers: {},
         config: {} as any,
@@ -123,7 +124,7 @@ describe('WokusService', () => {
     it('should create a textnote', async () => {
       const mockResponse: AxiosResponse<any> = {
         data: {},
-        status: 200,
+        status: 201,
         statusText: 'OK',
         headers: {},
         config: {} as any,
@@ -136,6 +137,44 @@ describe('WokusService', () => {
       const authHeader: string = 'Company Key';
       const result = await service.createTextnote(
         createTextnoteDTO,
+        authHeader,
+      );
+
+      expect(result).toBe(mockResponse.data);
+      expect(httpService.post).toHaveBeenCalled();
+    });
+  });
+
+  describe('createVoicemail', () => {
+    it('should create a voicemail', async () => {
+      const file: Express.Multer.File = {
+        fieldname: 'fieldname',
+        originalname: 'originalname',
+        encoding: 'encoding',
+        mimetype: 'mimetype',
+        size: 0,
+        destination: 'destination',
+        filename: 'filename',
+        path: 'path',
+        stream: null,
+        buffer: Buffer.from([]),
+      };
+      const mockResponse: AxiosResponse<any> = {
+        data: {},
+        status: 201,
+        statusText: 'OK',
+        headers: {},
+        config: {} as any,
+      };
+      jest
+        .spyOn(httpService, 'post')
+        .mockImplementation(() => of(mockResponse));
+
+      const createVoicemailDTO = new CreateVoicemailDTO(); // Add test data as needed
+      const authHeader: string = 'Company Key';
+      const result = await service.createVoicemail(
+        createVoicemailDTO,
+        file,
         authHeader,
       );
 

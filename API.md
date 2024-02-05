@@ -235,6 +235,15 @@ POST
 }
 ```
 
+or
+
+```json
+{
+  "wokuId": "65348875f3a876254aa82d5e",
+  "clientEmails": ["pedro@empresa.com", "juan@empresa.com"]
+}
+```
+
 ### Expected Responses
 
 - `201` -> Email sent successfully

@@ -327,3 +327,11 @@ export class VoicemailDTO extends Document {
   })
   clientId?: string;
 }
+
+export class SentEmailDTO {
+  @ApiProperty({
+    description: 'Operation success message',
+    example: 'Email sent successfully',
+  })
+  response: string;
+}

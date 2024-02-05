@@ -27,6 +27,7 @@ import {
   CreateTextnoteDTO,
   CreateWokuFormDataDTO,
   CreateVoicemailDTO,
+  ShareWokuToEmailDTO,
 } from './dto/request.dto';
 import { Textnote, Woku, WokuReview } from './interfaces/woku.interfaces';
 import {
@@ -34,6 +35,7 @@ import {
   WokuDTO,
   WokuReviewDTO,
   VoicemailDTO,
+  SentEmailDTO,
 } from './dto/response.dto';
 
 @ApiTags('wokus')
@@ -204,7 +206,7 @@ export class WokusController {
     },
   })
   @ApiResponse({
-    status: 200,
+    status: 201,
     description: 'Voicemail created successfully.',
     type: VoicemailDTO,
   })
@@ -222,5 +224,25 @@ export class WokusController {
     );
 
     return updatedWoku;
+  }
+
+  @ApiBearerAuth()
+  @Post('/share-woku-to-email')
+  @ApiOperation({ summary: 'Share woku to email' })
+  @ApiResponse({
+    status: 201,
+    description: 'Email sent successfully.',
+    type: SentEmailDTO['response'],
+  })
+  async shareWokuToEmail(
+    @Body() shareWokuToEmailDTO: ShareWokuToEmailDTO,
+    @Req() req: Request,
+  ) {
+    const isSendedEmail = await this.wokusService.shareWokuToEmail(
+      shareWokuToEmailDTO,
+      req.headers.authorization,
+    );
+
+    return isSendedEmail;
   }
 }

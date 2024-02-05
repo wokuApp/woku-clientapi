@@ -10,6 +10,7 @@ import {
   MaxLength,
   IsIn,
   IsEmpty,
+  IsArray,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -207,7 +208,26 @@ export class ShareWokuToEmailDTO {
   @ApiProperty({
     description: 'This field must be a valid customer email.',
     example: 'pedro@empresa.com',
+    required: false,
   })
   @IsEmail()
-  clientEmail: string;
+  @IsOptional()
+  clientEmail?: string;
+
+  @ApiProperty({
+    description:
+      'This field is a customer emails array. If this field is entered, the clientEmail field is not included.',
+    example: ['pedro@empresa.com', 'juan@empresa.com'],
+    required: false,
+  })
+  @IsArray({ message: 'clientEmails must be an array of email addresses' })
+  @IsEmail(
+    {},
+    {
+      each: true,
+      message: 'Each item in clientEmails must be a valid email address',
+    },
+  )
+  @IsOptional()
+  clientEmails?: string[];
 }

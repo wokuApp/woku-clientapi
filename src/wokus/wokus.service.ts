@@ -9,6 +9,7 @@ import {
   CreateTextnoteDTO,
   CreateWokuFormDataDTO,
   CreateVoicemailDTO,
+  ShareWokuToEmailDTO,
 } from './dto/request.dto';
 import {
   Textnote,
@@ -135,5 +136,29 @@ export class WokusService {
     const createdVoicemail = await firstValueFrom(createdVoicemail$);
 
     return createdVoicemail.data;
+  }
+
+  async shareWokuToEmail(
+    shareWokuToEmailDTO: ShareWokuToEmailDTO,
+    authHeader: string,
+  ): Promise<string> {
+    const data = {
+      ...shareWokuToEmailDTO,
+      authHeader,
+    };
+
+    const shareWokuToEmail$ = this.httpService.post(
+      '/share-woku-to-email',
+      data,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+
+    const shareWokuToEmail = await firstValueFrom(shareWokuToEmail$);
+
+    return shareWokuToEmail.data;
   }
 }

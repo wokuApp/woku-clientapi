@@ -32,7 +32,6 @@ export class CreateWokuDTO {
   @ApiProperty({
     description:
       'This field must contain a public URL that includes an image or video file. For optimal performance when sending video, the mp4 format is preferred.',
-    required: false,
     example:
       'https://wokudevfiles.blob.core.windows.net/wokus/cd7f9cf3-c2e4-4ff0-8a96-19ff813f569e1699220394936-image.webp',
   })
@@ -194,4 +193,21 @@ export class CreateVoicemailDTO {
   @IsIn(['true', 'false', ''])
   @IsOptional()
   anonymous?: string;
+}
+
+export class ShareWokuToEmailDTO {
+  @ApiProperty({
+    description: 'This field is the ID of a woku in string format.',
+    example: '65348875f3a876254aa82d5e',
+  })
+  @IsNotEmpty()
+  @IsMongoId()
+  wokuId: string;
+
+  @ApiProperty({
+    description: 'This field must be a valid customer email.',
+    example: 'pedro@empresa.com',
+  })
+  @IsEmail()
+  clientEmail: string;
 }

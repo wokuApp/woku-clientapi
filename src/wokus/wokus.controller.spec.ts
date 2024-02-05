@@ -12,6 +12,7 @@ import {
   GetWokuReviewDTO,
   CreateWokuFormDataDTO,
   CreateVoicemailDTO,
+  ShareWokuToEmailDTO,
 } from './dto/request.dto';
 import {
   Avatar,
@@ -255,6 +256,18 @@ describe('WokusController', () => {
         .spyOn(wokusService, 'createVoicemail')
         .mockImplementation(async () => result);
       expect(await controller.createVoicemail(file, dto, req)).toBe(result);
+    });
+  });
+
+  describe('shareWokuToEmail', () => {
+    it('should share woku to email', async () => {
+      const dto = new ShareWokuToEmailDTO();
+      const req = { headers: { authorization: 'company key' } } as Request;
+      const result = 'Email sent successfully' as string;
+      jest
+        .spyOn(wokusService, 'shareWokuToEmail')
+        .mockImplementation(async () => result);
+      expect(await controller.shareWokuToEmail(dto, req)).toBe(result);
     });
   });
 });

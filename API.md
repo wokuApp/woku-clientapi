@@ -247,9 +247,12 @@ POST
 - **wokuId\*** (string)
   - Example: 65348875f3a876254aa82d5e
   - This field is the ID of a woku in string format.
-- **clientEmail\*** (string)
+- **clientEmail** (string)
   - Example: pedro@empresa.com
   - This field must be a valid customer email.
+- **clientEmails** (string array)
+  - Example: ['pedro@empresa.com', 'juan@empresa.com']
+  - This field is a customer emails array. If this field is entered, the clientEmail field is not included.
 
 ## Contact and Support
 

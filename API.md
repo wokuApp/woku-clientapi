@@ -167,7 +167,7 @@ POST
 
 - **wokuId\*** (string)
   - Example: 65348875f3a876254aa82d5e
-  - The description cannot have fewer than 3 characters and cannot exceed a maximum of 140 characters.
+  - This field is the ID of a woku in string format.
 - **qualification\*** (number)
   - Example: 4
   - This field must contain an integer between 1 and 5.
@@ -210,6 +210,46 @@ POST
 
 - `201` -> Created voicemail object
 - `500 Internal server error`
+
+## Endpoint to Share woku to Email
+
+### URL
+
+`https://clientapi.woku.app/wokus/share-woku-to-email`
+
+### Method
+
+POST
+
+### Headers
+
+- `Content-Type: application/json`
+- `Authorization: Bearer <Company-Key>`
+
+### Body Request
+
+```json
+{
+  "wokuId": "65348875f3a876254aa82d5e",
+  "clientEmail": "pedro@empresa.com"
+}
+```
+
+### Expected Responses
+
+- `201` -> Email sent successfully
+- `500 Internal server error`
+
+### DTO of the Body
+
+#### ShareWokuToEmailDTO
+
+- **wokuId\*** (string)
+  - Example: 65348875f3a876254aa82d5e
+  - This field is the ID of a woku in string format.
+- **clientEmail\*** (string)
+  - Example: pedro@empresa.com
+  - This field must be a valid customer email.
 
 ## Contact and Support
 

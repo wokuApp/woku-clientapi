@@ -142,7 +142,10 @@ export class WokusService {
     shareWokuToEmailDTO: ShareWokuToEmailDTO,
     authHeader: string,
   ): Promise<string> {
-    if (shareWokuToEmailDTO.clientEmails.length > 0) {
+    if (
+      shareWokuToEmailDTO.clientEmails &&
+      shareWokuToEmailDTO.clientEmails.length > 0
+    ) {
       const clientEmails = shareWokuToEmailDTO.clientEmails;
       const wokuId = shareWokuToEmailDTO.wokuId;
       const failedEmails = {

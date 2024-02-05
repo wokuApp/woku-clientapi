@@ -11,6 +11,7 @@ import {
   GetWokuReviewDTO,
   CreateWokuFormDataDTO,
   CreateVoicemailDTO,
+  ShareWokuToEmailDTO,
 } from './dto/request.dto';
 
 describe('WokusService', () => {
@@ -175,6 +176,31 @@ describe('WokusService', () => {
       const result = await service.createVoicemail(
         createVoicemailDTO,
         file,
+        authHeader,
+      );
+
+      expect(result).toBe(mockResponse.data);
+      expect(httpService.post).toHaveBeenCalled();
+    });
+  });
+
+  describe('shareWokuToEmail', () => {
+    it('should share woku to email', async () => {
+      const mockResponse: AxiosResponse<any> = {
+        data: {},
+        status: 201,
+        statusText: 'OK',
+        headers: {},
+        config: {} as any,
+      };
+      jest
+        .spyOn(httpService, 'post')
+        .mockImplementation(() => of(mockResponse));
+
+      const shareWokuToEmailDTO = new ShareWokuToEmailDTO(); // Add test data as needed
+      const authHeader: string = 'Company Key';
+      const result = await service.shareWokuToEmail(
+        shareWokuToEmailDTO,
         authHeader,
       );
 

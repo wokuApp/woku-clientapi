@@ -24,7 +24,9 @@ Company Key.
 
 ### Obtaining and Using Keys
 
-A Company Key is provided to the company owner in woku. This key must be included in the headers of API requests. The woku client interface can be accessed at `https://fresh.woku.app`
+A Company Key is provided to the company owner in woku. This key must be included in the headers of API requests. The woku client interface can be accessed at `https://admin.woku.app`
+
+![View of the company information window in the client's application](https://ik.imagekit.io/dior7woku/develop/clientapi/wokuAdmin.png?updatedAt=1717020279616 "View of the company information window in the client's application")
 
 ## Endpoint to Create woku
 

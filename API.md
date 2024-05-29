@@ -47,7 +47,7 @@ POST
 {
   "description": "Docker Training",
   "fileUrl": "https://wokudevfiles.blob.core.windows.net/wokus/cd7f9cf3-c2e4-4ff0-8a96-19ff813f569e1699220394936-image.webp",
-  "secondaryKey": "17614778-3",
+  "folderSecondaryKey": "17614778-3",
   "clientEmail": "pedro@empresa.com"
 }
 ```
@@ -66,7 +66,7 @@ POST
   - The description cannot have fewer than 3 characters and cannot exceed a maximum of 140 characters.
 - **fileUrl\*** (string)
   - This field must be a publicly accessible URL to an image or video file. For videos, prefer files with .mp4 extension.
-- **secondaryKey** (string)
+- **folderSecondaryKey** (string)
   - This is an optional field. This key must be provided by the company owner to a company folder manually in the woku client interface.
 - **clientEmail** (string)
   - This field must contain a valid email.
@@ -93,7 +93,7 @@ POST
   - The description cannot have fewer than 3 characters and cannot exceed a maximum of 140 characters.
 - **file\*** ($binary)
   - This field must be an image or video file. For videos, prefer files with .mp4 extension.
-- **secondaryKey** (text)
+- **folderSecondaryKey** (text)
   - This is an optional field. This key must be provided by the company owner to a company folder manually in the woku client interface.
 - **clientEmail** (text)
   - This field must contain a valid email. This field is optional.

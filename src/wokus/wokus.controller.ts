@@ -85,7 +85,7 @@ export class WokusController {
             'The description cannot have fewer than 3 characters and cannot exceed a maximum of 140 characters.',
           example: 'Docker Training',
         },
-        secondaryKey: {
+        folderSecondaryKey: {
           type: 'string',
           description:
             'This field is optional. Upon completing this field, the woku will be stored in the Company Folder that holds this secondary key.',

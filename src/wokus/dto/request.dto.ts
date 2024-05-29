@@ -49,7 +49,7 @@ export class CreateWokuDTO {
   })
   @IsString()
   @IsOptional()
-  secondaryKey?: string;
+  folderSecondaryKey?: string;
 
   @ApiProperty({
     description:
@@ -86,7 +86,7 @@ export class CreateWokuFormDataDTO {
   })
   @IsString()
   @IsOptional()
-  secondaryKey?: string;
+  folderSecondaryKey?: string;
 
   @ApiProperty({
     description:

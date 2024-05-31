@@ -142,53 +142,17 @@ export class WokusService {
     shareWokuToEmailDTO: ShareWokuToEmailDTO,
     authHeader: string,
   ): Promise<string> {
-    if (
+    const emails =
       shareWokuToEmailDTO?.clientEmails &&
       shareWokuToEmailDTO.clientEmails.length > 0
-    ) {
-      const clientEmails = shareWokuToEmailDTO.clientEmails;
-      const wokuId = shareWokuToEmailDTO.wokuId;
-      const failedEmails = {
-        emails: [],
-      };
+        ? shareWokuToEmailDTO.clientEmails
+        : [shareWokuToEmailDTO.clientEmail];
 
-      clientEmails.forEach(async (clientEmail: string): Promise<void> => {
-        const data = {
-          wokuId,
-          clientEmail,
-          authHeader,
-        };
-
-        const shareWokuToEmail$ = this.httpService.post(
-          '/share-woku-to-email',
-          data,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          },
-        );
-
-        const response = await firstValueFrom(shareWokuToEmail$);
-
-        if (response.data !== 'Email sent successfully') {
-          failedEmails.emails.push(clientEmail);
-        }
-      });
-
-      if (failedEmails.emails.length > 0) {
-        const message =
-          'The following emails failed to be sent: ' +
-          failedEmails.emails.join(', ');
-
-        return message;
-      }
-
-      return 'Emails sent successfully';
-    }
+    const { wokuId } = shareWokuToEmailDTO;
 
     const data = {
-      ...shareWokuToEmailDTO,
+      wokuId,
+      emails,
       authHeader,
     };
 

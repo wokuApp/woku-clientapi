@@ -152,7 +152,7 @@ export class WokusService {
 
     const data = {
       wokuId,
-      emails,
+      clientEmails: emails,
       authHeader,
     };
 

@@ -48,7 +48,7 @@ export class WokusService {
       }
 
       const createdWokuWithFormData$ = this.httpService.post(
-        '/create-woku-form-data',
+        '/clientapi/create-woku-form-data',
         formData,
         {
           headers: {
@@ -62,7 +62,7 @@ export class WokusService {
       return createdWoku.data;
     }
 
-    const createdWoku$ = this.httpService.post('/create-woku', data, {
+    const createdWoku$ = this.httpService.post('/clientapi/create-woku', data, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -79,7 +79,9 @@ export class WokusService {
   ): Promise<WokuReview> {
     const auth = this.utilsService.extractKeyFromAuthHeader(authHeader);
 
-    const wokuReview$ = this.httpService.get(`/review/${wokuId}/${auth}`);
+    const wokuReview$ = this.httpService.get(
+      `/clientapi/review/${wokuId}/${auth}`,
+    );
     const wokuReview = await firstValueFrom(wokuReview$);
 
     return wokuReview.data;
@@ -94,11 +96,15 @@ export class WokusService {
       authHeader: authHeader,
     };
 
-    const createdTextnote$ = this.httpService.post('/create-textnote', data, {
-      headers: {
-        'Content-Type': 'application/json',
+    const createdTextnote$ = this.httpService.post(
+      '/clientapi/create-textnote',
+      data,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
-    });
+    );
 
     const createdTextnote = await firstValueFrom(createdTextnote$);
 
@@ -123,7 +129,7 @@ export class WokusService {
     }
 
     const createdVoicemail$ = this.httpService.post(
-      '/create-voicemail',
+      '/clientapi/create-voicemail',
       formData,
       {
         headers: {
@@ -157,7 +163,7 @@ export class WokusService {
     };
 
     const shareWokuToEmail$ = this.httpService.post(
-      '/share-woku-to-email',
+      '/clientapi/share-woku-to-email',
       data,
       {
         headers: {

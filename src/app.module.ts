@@ -6,6 +6,7 @@ import { memoryStorage } from 'multer';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { WokusModule } from './wokus/wokus.module';
+import { ReviewModule } from './review/review.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { WokusModule } from './wokus/wokus.module';
     MulterModule.register({
       storage: memoryStorage(),
     }),
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -54,7 +54,7 @@ export class ReviewService {
     createTextnoteDTO: CreateTextnoteDTO,
   ): Promise<Textnote> {
     const createdTextnote$ = this.httpService.post(
-      '/review/create-voicemail',
+      '/review/create-textnote',
       createTextnoteDTO,
       {
         headers: {

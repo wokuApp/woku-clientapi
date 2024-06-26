@@ -116,7 +116,7 @@ describe('WokusService', () => {
 
       expect(result).toBe(mockResponse.data);
       expect(httpService.get).toHaveBeenCalledWith(
-        `/review/${wokuId}/${authHeader}`,
+        `/clientapi/review/${wokuId}/${authHeader}`,
       );
     });
   });

@@ -331,10 +331,21 @@ export class VoicemailDTO extends Document {
 export class SentEmailDTO {
   @ApiProperty({
     description: 'Operation success message',
-    example:
-      'Email sent successfully' ||
-      'Emails sent successfully' ||
-      'The following emails failed to be sent: pedro@empresa.com, juan@empresa.com',
+    examples: {
+      example1: {
+        summary: 'Single email sent successfully',
+        value: 'Email sent successfully',
+      },
+      example2: {
+        summary: 'Multiple emails sent successfully',
+        value: 'Emails sent successfully',
+      },
+      example3: {
+        summary: 'Failed email addresses',
+        value:
+          'The following emails failed to be sent: pedro@empresa.com, juan@empresa.com',
+      },
+    },
   })
   response: string;
 }

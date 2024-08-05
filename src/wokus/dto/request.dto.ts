@@ -43,13 +43,23 @@ export class CreateWokuDTO {
 
   @ApiProperty({
     description:
-      'This field is optional. Upon completing this field, the woku will be stored in the Company Folder that holds this secondary key.',
+      'This field is optional. Upon completing this field, the woku will be stored in the Company Folder that holds this folder secondary key.',
     required: false,
     example: '17614778-3',
   })
   @IsString()
   @IsOptional()
   folderSecondaryKey?: string;
+
+  @ApiProperty({
+    description:
+      'This field is optional. Upon completing this field, the woku Folder will be stored in the Company Folder that holds this folder secondary key. This field cannot be the same as folderSecondaryKey because a folder cannot contain itself.',
+    required: false,
+    example: 'parentFolder17614778-3',
+  })
+  @IsString()
+  @IsOptional()
+  parentFolderSecondaryKey?: string;
 
   @ApiProperty({
     description:

@@ -50,6 +50,7 @@ POST
   "description": "Docker Training",
   "fileUrl": "https://wokudevfiles.blob.core.windows.net/wokus/cd7f9cf3-c2e4-4ff0-8a96-19ff813f569e1699220394936-image.webp",
   "folderSecondaryKey": "17614778-3",
+  "parentFolderSecondaryKey": "parentFolder17614778-3",
   "clientEmail": "pedro@empresa.com"
 }
 ```
@@ -69,7 +70,9 @@ POST
 - **fileUrl\*** (string)
   - This field must be a publicly accessible URL to an image or video file. For videos, prefer files with .mp4 extension.
 - **folderSecondaryKey** (string)
-  - This is an optional field. This key must be provided by the company owner to a company folder manually in the woku client interface.
+  - This field is optional. Upon completing this field, the woku will be stored in the Company Folder that holds this folder secondary key.
+- **parentFolderSecondaryKey** (string)
+  - This field is optional. Upon completing this field, the woku Folder will be stored in the Company Folder that holds this folder secondary key.
 - **clientEmail** (string)
   - This field must contain a valid email.
 
@@ -96,7 +99,9 @@ POST
 - **file\*** ($binary)
   - This field must be an image or video file. For videos, prefer files with .mp4 extension.
 - **folderSecondaryKey** (text)
-  - This is an optional field. This key must be provided by the company owner to a company folder manually in the woku client interface.
+  - This field is optional. Upon completing this field, the woku will be stored in the Company Folder that holds this folder secondary key.
+- **parentFolderSecondaryKey** (text)
+  - This field is optional. Upon completing this field, the woku Folder will be stored in the Company Folder that holds this folder secondary key.
 - **clientEmail** (text)
   - This field must contain a valid email. This field is optional.
 

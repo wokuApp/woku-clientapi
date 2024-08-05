@@ -72,7 +72,7 @@ POST
 - **folderSecondaryKey** (string)
   - This field is optional. Upon completing this field, the woku will be stored in the Company Folder that holds this folder secondary key.
 - **parentFolderSecondaryKey** (string)
-  - This field is optional. Upon completing this field, the woku Folder will be stored in the Company Folder that holds this folder secondary key.
+  - This field is optional. Upon completing this field, the woku Folder will be stored in the Company Folder that holds this folder secondary key. This field cannot be the same as folderSecondaryKey because a folder cannot contain itself.
 - **clientEmail** (string)
   - This field must contain a valid email.
 
@@ -101,7 +101,7 @@ POST
 - **folderSecondaryKey** (text)
   - This field is optional. Upon completing this field, the woku will be stored in the Company Folder that holds this folder secondary key.
 - **parentFolderSecondaryKey** (text)
-  - This field is optional. Upon completing this field, the woku Folder will be stored in the Company Folder that holds this folder secondary key.
+  - This field is optional. Upon completing this field, the woku Folder will be stored in the Company Folder that holds this folder secondary key. This field cannot be the same as folderSecondaryKey because a folder cannot contain itself.
 - **clientEmail** (text)
   - This field must contain a valid email. This field is optional.
 

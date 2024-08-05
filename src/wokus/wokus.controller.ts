@@ -94,7 +94,7 @@ export class WokusController {
         parentFolderSecondaryKey: {
           type: 'string',
           description:
-            'This field is optional. Upon completing this field, the woku will be stored in the Company Folder that holds this folder secondary key.',
+            'This field is optional. Upon completing this field, the woku will be stored in the Company Folder that holds this folder secondary key. This field cannot be the same as folderSecondaryKey because a folder cannot contain itself.',
           example: '17614778-3',
         },
         clientEmail: {

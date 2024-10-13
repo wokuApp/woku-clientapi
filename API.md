@@ -1,49 +1,72 @@
-# woku client API Documentation
+# **API Documentation**
 
-This documentation explains the logic of the Rest API for creating and rating wokus in your own application.
+This documentation serves as a guide to integrating the woku API into your applications.
 
-## Considerations
+## **Considerations**
 
-The `woku-clientapi` is documented using Swagger in NestJS. The documentation can be found at [https://clientapi.woku.app/documentation](https://clientapi.woku.app/documentation)
+The woku API is documented using **Swagger**. You can access the interactive documentation at: [https://clientapi.woku.app/documentation](https://clientapi.woku.app/documentation)
 
-## Introduction
+## **Introduction**
 
-### General Description
+The woku API allows you to efficiently manage **wokus** through three key functions: **create**, **share**, and **rate** wokus. These functionalities enable seamless integration of review collection within your application, enhancing customer interaction and improving user experience.
 
-This is a REST API service that enables company owners within the woku service to create wokus and other functions.
+Here are the main functions available:
 
-#### Base URL
+1. **Create wokus:** Automate the generation of new wokus from your application, enabling users to leave reviews and feedback without manual intervention.
+2. **Share wokus:** Easily share wokus with your customers or teams, providing visibility into reviews directly from your platform.
+3. **Rate wokus:** Allow users to score services or products based on their experience, capturing valuable metrics about customer satisfaction.
 
-`https://clientapi.woku.app`
+Each of these functions is designed for easy integration via HTTP requests, ensuring secure and agile management of wokus.
 
-## Authentication
+## **Base URL**
 
-### Type of Authentication
+- [https://clientapi.woku.app](https://clientapi.woku.app/)
 
-Company Key.
+## **Authentication**
 
-### Obtaining and Using Keys
+Each company registered in woku has access to API services to integrate woku with their own applications.
 
-A Company Key is provided to the company owner in woku. This key must be included in the headers of API requests. The woku client interface can be accessed at `https://admin.woku.app`
+### **Authentication Type**
+
+To access the API functions, you must authenticate using the **Company Key** in each request.
+
+### **Obtaining and Using the Company Key**
+
+Every woku owner is assigned a Company Key, which must be included in the headers of API requests. The administrative interface of woku is available at: [https://admin.woku.app](https://admin.woku.app)
 
 ![View of the company information window in the client's application](https://ik.imagekit.io/dior7woku/develop/clientapi/wokuAdmin.png?updatedAt=1717020279616 "View of the company information window in the client's application")
 
-## Endpoint to Create woku
+In each request, include an Authorization header in the following format:
 
-### URL
+```bash
+Authorization: Bearer <Company-Key>
+```
 
-`https://clientapi.woku.app/wokus/create-woku`
+## **wokus**
 
-### Method
+**wokus** are the key units for capturing and managing customer reviews within the woku platform. Through this API, you can automate the creation of **wokus**, rate them, capture reviews, and share them with your customers. Below are the main API requests that facilitate these tasks:
 
-POST
+- **Create a woku**: Generate a new woku within your application.
+- **Create a woku with form-data**: Send data in form-data format to create wokus.
+- **Retrieve woku data**: Get the data of a woku, including ratings and reviews.
+- **Rate and capture a text review for a woku**: Capture the rating and written review from a customer for a woku.
+- **Rate and capture a voice review for a woku**: Capture the rating and voice review from a customer for a woku.
+- **Share a woku by email**: Send wokus directly by email, including bulk email sending.
 
-### Headers
+### **Creating a woku from Your Application**
 
-- `Content-Type: application/json`
-- `Authorization: Bearer <Company-Key>`
+One key functionality to integrate into your application is the creation of a woku. This allows you to automate the task of creating a review tool without requiring the administrator to manually perform the action in the woku interface.
 
-### Body Request
+To create a **woku**, send a **POST** request to the following URL:
+
+- https://clientapi.woku.app/wokus/create-woku
+
+**Required Headers**
+
+- **Content-Type:** application/json
+- **Authorization:** Bearer <Company-Key>
+
+**Example Request Body (JSON)**
 
 ```json
 {
@@ -55,185 +78,147 @@ POST
 }
 ```
 
-### Expected Responses
+**Request Body Structure**
 
-- `201` -> Created woku object
-- `500 Internal server error`
+- **description** (string): Required. Minimum of 3 and maximum of 140 characters.
+- **fileUrl** (string): Required. Public access URL for an image or video (preferably .mp4).
+- **folderSecondaryKey** (string): Optional. Secondary key for the folder where the woku will be stored.
+- **parentFolderSecondaryKey** (string): Optional. Secondary key for the parent folder. Cannot be the same as **folderSecondaryKey**.
+- **clientEmail** (string): Must be a valid email address.
 
-### DTO of the Body
+**Expected Responses**
 
-#### CreateWokuDTO
+- **201 Created woku object**: The woku was successfully created.
+- **500 Internal Server Error**: A server error occurred.
 
-- **description\*** (string)
-  - Example: Description of the woku
-  - The description cannot have fewer than 3 characters and cannot exceed a maximum of 140 characters.
-- **fileUrl\*** (string)
-  - This field must be a publicly accessible URL to an image or video file. For videos, prefer files with .mp4 extension.
-- **folderSecondaryKey** (string)
-  - This field is optional. Upon completing this field, the woku will be stored in the Company Folder that holds this folder secondary key.
-- **parentFolderSecondaryKey** (string)
-  - This field is optional. Upon completing this field, the woku Folder will be stored in the Company Folder that holds this folder secondary key. This field cannot be the same as folderSecondaryKey because a folder cannot contain itself.
-- **clientEmail** (string)
-  - This field must contain a valid email.
+### **Creating a woku with Form Data from Your Application**
 
-## Endpoint to Create woku with Form Data
+In some cases, it is useful to allow users to create a **woku** through an interface where they can upload images or videos as files. The API provides a method to create a **woku** using form-data.
 
-### URL
+To create a **woku** with form-data, send a **POST** request to the following URL:
 
-`https://clientapi.woku.app/wokus/create-woku-form-data`
+- https://clientapi.woku.app/wokus/create-woku-form-data
 
-### Method
+**Required Headers**
 
-POST
+- **Content-Type**: multipart/form-data
+- **Authorization**: Bearer <Company-Key>
 
-### Headers
+**Request Body Structure (form-data)**
 
-- `Content-Type: application/json`
-- `Authorization: Bearer <Company-Key>`
+- **description** (string): Required. Minimum of 3 and maximum of 140 characters.
+- **file** ($binary): Required. Must be an image or video file. For videos, .mp4 is recommended.
+- **folderSecondaryKey** (string): Optional. Secondary key for the folder where the woku will be stored.
+- **parentFolderSecondaryKey** (string): Optional. Secondary key for the parent folder. Cannot be the same as folderSecondaryKey.
+- **clientEmail** (string): Optional. Must be a valid email address.
 
-### Form Data Request
+**Expected Responses**
 
-- **description\*** (text)
-  - Example: Description of the woku
-  - The description cannot have fewer than 3 characters and cannot exceed a maximum of 140 characters.
-- **file\*** ($binary)
-  - This field must be an image or video file. For videos, prefer files with .mp4 extension.
-- **folderSecondaryKey** (text)
-  - This field is optional. Upon completing this field, the woku will be stored in the Company Folder that holds this folder secondary key.
-- **parentFolderSecondaryKey** (text)
-  - This field is optional. Upon completing this field, the woku Folder will be stored in the Company Folder that holds this folder secondary key. This field cannot be the same as folderSecondaryKey because a folder cannot contain itself.
-- **clientEmail** (text)
-  - This field must contain a valid email. This field is optional.
+- **201 Created woku object**: The woku was successfully created.
+- **500 Internal Server Error**: A server error occurred.
 
-### Expected Responses
+### **Retrieve woku Data**
 
-- `201` -> Created woku object
-- `500 Internal server error`
+This method allows you to retrieve the data of a **woku**, including its ratings and reviews. You can use this functionality to access detailed information about an existing **woku**.
 
-## Endpoint to Get Review
+To retrieve the data of a **woku**, send a **GET** request to the following URL:
 
-### URL
+- https://clientapi.woku.app/wokus/review/{wokuId}
 
-`https://clientapi.woku.app/wokus/review/{wokuId}`
+**Required Headers**
 
-### Method
+- **Content-Type**: application/json
+- **Authorization**: Bearer <Company-Key>
 
-GET
+**Parameters**
 
-### Headers
+- **wokuId** (string): Required. The unique identifier of the **woku** you want to retrieve.
 
-- `Content-Type: application/json`
-- `Authorization: Bearer <Company-Key>`
+**Expected Responses**
 
-### Params
+- **200 OK**: The woku object was successfully retrieved.
+- **500 Internal Server Error**: A server error occurred.
 
-- **wokuId\*** (text)
-  - Example: 65348875f3a876254aa82d5e
-  - woku ID
+### **Rate and Capture a Text Review for a woku**
 
-### Expected Responses
+This method allows users to add a written review and rating to a **woku**. It is useful for capturing text feedback from customers about their experiences.
 
-- `200` -> Created woku review object
-- `500 Internal server error`
+To add a text note to a **woku**, send a **POST** request to the following URL:
 
-## Endpoint to Create Textnote
+- https://clientapi.woku.app/wokus/create-textnote
 
-### URL
+**Required Headers**
 
-`https://clientapi.woku.app/wokus/create-textnote`
+- **Content-Type**: application/json
+- **Authorization**: Bearer <Company-Key>
 
-### Method
-
-POST
-
-### Headers
-
-- `Content-Type: application/json`
-- `Authorization: Bearer <Company-Key>`
-
-### Body Request
+**Example Request Body (JSON)**
 
 ```json
 {
   "wokuId": "65348875f3a876254aa82d5e",
   "qualification": 4,
-  "description": "Very good the Docker course!",
+  "description": "Very good Docker course!",
   "clientEmail": "pedro@empresa.com",
   "anonymous": false
 }
 ```
 
-### Expected Responses
+**Request Body Structure**
 
-- `201` -> Created Textnote object
-- `500 Internal server error`
+- **wokuId** (string): Required. The ID of the **woku** to which the note will be added.
+- **qualification** (number): Required. An integer between 1 and 5 representing the rating.
+- **description** (string): Required. The text review from the customer, with a maximum of 255 characters.
+- **clientEmail** (string): Optional. The email address of the customer leaving the review. If not provided, the **anonymous** field must be set to true.
+- **anonymous** (boolean): Optional. Indicates whether the feedback is anonymous.
 
-### DTO of the Body
+**Expected Responses**
 
-#### CreateTextnoteDTO
+- **201 Created textnote object**: The rating and review were successfully created.
+- **500 Internal Server Error**: A server error occurred.
 
-- **wokuId\*** (string)
-  - Example: 65348875f3a876254aa82d5e
-  - This field is the ID of a woku in string format.
-- **qualification\*** (number)
-  - Example: 4
-  - This field must contain an integer between 1 and 5.
-  - **description\*** (string)
-  - Example: Very good the Docker course!
-  - This field must be a string; it is the written feedback that the client leaves for the woku.
-- **clientEmail** (string)
-  - Example: pedro@empresa.com
-  - This field is the email of the client providing the feedback. This field is optional. If this field is not filled out, the anonymous field must be marked as true.
+### **Rate and Capture a Voice Review for a woku**
 
-## Endpoint to Create Voicemail with Form Data
+This method allows customers to rate and leave a voice message review for a **woku**.
 
-### URL
+To create a voicemail, send a **POST** request to the following URL:
 
-`https://clientapi.woku.app/wokus/create-voicemail`
+- https://clientapi.woku.app/wokus/create-voicemail
 
-### Method
+**Required Headers**
 
-POST
+- **Content-Type**: multipart/form-data
+- **Authorization**: Bearer <Company-Key>
 
-### Headers
+**Request Body Structure (form-data)**
 
-- `Content-Type: application/json`
-- `Authorization: Bearer <Company-Key>`
+- **file** ($binary): Required. Audio or video file. Recommended formats: .mp4, .wav.
+- **wokuId** (string): Required. The ID of the **woku** to which the voicemail will be added.
+- **qualification** (number): Required. An integer between 1 and 5 representing the rating.
+- **clientEmail** (string): Optional. The email address of the customer leaving the review. If not provided, the **anonymous** field must be set to true.
+- **anonymous** (boolean): Optional. Indicates whether the feedback is anonymous (true or false).
 
-### Form Data Request
+**Expected Responses**
 
-- **file\*** ($binary)
-  - This field must be a publicly accessible URL to an image or video file.
-- **wokuId\*** (text)
-  - This field is the ID of a woku in text format.
-- **qualification\*** (text)
-  - This field is a text that represents an integer between 1 and 5.
-- **clientEmail** (text)
-  - This field is the email of the client providing the feedback. This field is optional. If this field is not filled out, the anonymous field must be marked as true.
-- **anonymous** (text)
-  - This field is a string that represents a boolean, so the only options are true or false. This field is optional. When this field is a true, sends anonymous feedback. When this field is omitted or marked false, the client email must be provided in the clientEmail field.
+- **201 Created voicemail object**: The voicemail was successfully created.
+- **500 Internal Server Error**: A server error occurred.
 
-### Expected Responses
+### **Share a woku by Email**
 
-- `201` -> Created voicemail object
-- `500 Internal server error`
+This method allows you to share a **woku** by email with one or more recipients. It is ideal for quickly and efficiently sharing reviews.
 
-## Endpoint to Share woku to Email
+To share a **woku** by email, send a **POST** request to the following URL:
 
-### URL
+- https://clientapi.woku.app/wokus/share-woku-to-email
 
-`https://clientapi.woku.app/wokus/share-woku-to-email`
+**Required Headers**
 
-### Method
+- **Content-Type**: application/json
+- **Authorization**: Bearer <Company-Key>
 
-POST
+**Request Body (JSON)**
 
-### Headers
-
-- `Content-Type: application/json`
-- `Authorization: Bearer <Company-Key>`
-
-### Body Request
+To send to a single recipient:
 
 ```json
 {
@@ -242,7 +227,7 @@ POST
 }
 ```
 
-or
+To send to multiple recipients:
 
 ```json
 {
@@ -251,38 +236,30 @@ or
 }
 ```
 
-### Expected Responses
+**Request Body Structure**
 
-- `201` -> Email sent successfully
-- `500 Internal server error`
+- **wokuId** (string): Required. The ID of the **woku** to be shared.
+- **clientEmail** (string): Optional. The email address of the recipient.
+- **clientEmails** (array of strings): Optional. List of email addresses of the recipients.
 
-### DTO of the Body
+**Expected Responses**
 
-#### ShareWokuToEmailDTO
+- **201 Email sent successfully**: The email was sent successfully.
+- **500 Internal Server Error**: A server error occurred.
 
-- **wokuId\*** (string)
-  - Example: 65348875f3a876254aa82d5e
-  - This field is the ID of a woku in string format.
-- **clientEmail** (string)
-  - Example: pedro@empresa.com
-  - This field must be a valid customer email.
-- **clientEmails** (string array)
-  - Example: ['pedro@empresa.com', 'juan@empresa.com']
-  - This field is a customer emails array. If this field is entered, the clientEmail field is not included.
+## **Contact and Support**
 
-## Contact and Support
+### **Contact**
 
-### Contact
-
-- Diego Orrego Brito, CTO of woku
+- Diego Orrego Brito, CTO of woku.
 - Email: diego@woku.app (Please include the company name in the subject and mention the API).
 
-## Common Errors and Solutions
+## **Common Errors and Solutions**
 
-### Inaccessible File URL
+### **Inaccessible File URL**
 
 Ensure that the URL of the provided file is publicly accessible. Our service needs to be able to access the file to create the woku.
 
-### Secondary Key
+### **Secondary Key**
 
 The secondary key is for creating a Folder where the woku will be contained. If a secondary key is not provided, the woku will remain at the Company level. Two Folders with the same secondary key cannot exist within a Company.

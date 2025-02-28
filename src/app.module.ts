@@ -7,6 +7,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { WokusModule } from './wokus/wokus.module';
 import { ReviewModule } from './review/review.module';
+import { CompanyModule } from './company/company.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ReviewModule } from './review/review.module';
       storage: memoryStorage(),
     }),
     ReviewModule,
+    CompanyModule,
   ],
   controllers: [AppController],
   providers: [AppService],

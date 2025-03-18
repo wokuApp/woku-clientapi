@@ -22,7 +22,7 @@ export class ReportService {
 
   async getCompanyNpsReport(authHeader: string) {
     const companyNpsReport$ = this.httpService.post(
-      '/reports/clientapi/company-nps',
+      '/reports/clientapi/company',
       {
         authHeader,
       },

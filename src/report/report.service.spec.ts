@@ -95,7 +95,7 @@ describe('ReportService', () => {
 
       // Assert
       expect(httpService.post).toHaveBeenCalledWith(
-        '/reports/clientapi/company-nps',
+        '/reports/clientapi/company',
         {
           authHeader,
         },

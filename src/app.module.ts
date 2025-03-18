@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { WokusModule } from './wokus/wokus.module';
 import { ReviewModule } from './review/review.module';
 import { CompanyModule } from './company/company.module';
+import { ReportModule } from './report/report.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { CompanyModule } from './company/company.module';
     }),
     ReviewModule,
     CompanyModule,
+    ReportModule,
   ],
   controllers: [AppController],
   providers: [AppService],

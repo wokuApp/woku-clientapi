@@ -70,6 +70,15 @@ export class CreateWokuDTO {
   @IsEmail()
   @IsOptional()
   clientEmail?: string;
+
+  @ApiProperty({
+    description: 'This field is the phone number of the client.',
+    example: 56982959776,
+    required: false,
+  })
+  @IsNumber()
+  @IsOptional()
+  clientPhone?: number;
 }
 
 export class CreateWokuFormDataDTO {
@@ -107,6 +116,15 @@ export class CreateWokuFormDataDTO {
   @IsEmail()
   @IsOptional()
   clientEmail?: string;
+
+  @ApiProperty({
+    description: 'This field is the phone number of the client.',
+    example: 56982959776,
+    required: false,
+  })
+  @IsNumber()
+  @IsOptional()
+  clientPhone?: number;
 }
 
 export class GetWokuReviewDTO {

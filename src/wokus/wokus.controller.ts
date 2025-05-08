@@ -153,6 +153,45 @@ export class WokusController {
   @ApiBearerAuth()
   @Post('/create-textnote')
   @ApiOperation({ summary: 'Create a Textnote' })
+  @ApiBody({
+    type: CreateTextnoteDTO,
+    description: 'Textnote creation data',
+    examples: {
+      example1: {
+        summary: 'Standard Textnote',
+        description: 'A standard textnote with client email and client phone',
+        value: {
+          wokuId: '65348875f3a876254aa82d5e',
+          qualification: 4,
+          description: 'Very good the Docker course!',
+          clientEmail: 'pedro@empresa.com',
+          clientPhone: 56982959776,
+          anonymous: false,
+        },
+      },
+      example2: {
+        summary: 'Anonymous Textnote',
+        description: 'An anonymous textnote',
+        value: {
+          wokuId: '65348875f3a876254aa82d5e',
+          qualification: 5,
+          description: 'Excellent training!',
+          anonymous: true,
+        },
+      },
+      example3: {
+        summary: 'Textnote with email',
+        description: 'A textnote with client email',
+        value: {
+          wokuId: '65348875f3a876254aa82d5e',
+          qualification: 5,
+          description: 'Excellent training!',
+          clientPhone: 56982959776,
+          anonymous: false,
+        },
+      },
+    },
+  })
   @ApiResponse({
     status: 201,
     description: 'Textnote created successfully.',
@@ -181,29 +220,35 @@ export class WokusController {
       type: 'object',
       properties: {
         file: {
-          type: 'string',
+          type: 'file',
           format: 'binary',
           description: 'Audio file.',
         },
         wokuId: {
-          type: 'string',
+          type: 'text',
           description: 'This field is the ID of a woku in string format.',
           example: '65348875f3a876254aa82d5e',
         },
         qualification: {
-          type: 'string',
+          type: 'text',
           description:
             'This field is a string that represents an integer between 1 and 5.',
           example: '5',
         },
         clientEmail: {
-          type: 'string',
+          type: 'text',
           description:
             'This field is the email of the client providing the feedback. This field is optional. If this field is not filled out, the anonymous field must be marked as true.',
           example: 'pedro@empesa.com',
         },
+        clientPhone: {
+          type: 'text',
+          description:
+            'This field is the phone number of the client providing the feedback. This field is optional.',
+          example: '56982959776',
+        },
         anonymous: {
-          type: 'string',
+          type: 'text',
           description:
             'This field is a string that represents a boolean, so the only options are true or false. This field is optional. When this field is a true, sends anonymous feedback. When this field is omitted or marked false, the client email must be provided in the clientEmail field.',
           example: 'false',

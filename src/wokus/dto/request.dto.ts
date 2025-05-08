@@ -174,6 +174,15 @@ export class CreateTextnoteDTO {
   clientEmail?: string;
 
   @ApiProperty({
+    description: 'This field is the phone number of the client.',
+    example: 56982959776,
+    required: false,
+  })
+  @IsNumber()
+  @IsOptional()
+  clientPhone?: number;
+
+  @ApiProperty({
     description:
       'This field is a boolean that, when true, sends anonymous feedback. This field is optional. When this field is omitted or marked false, the client email must be provided in the clientEmail field.',
     example: false,
@@ -212,6 +221,15 @@ export class CreateVoicemailDTO {
   @IsEmpty()
   @IsOptional()
   clientEmail?: string;
+
+  @ApiProperty({
+    description: 'This field is the phone number of the client.',
+    example: 56982959776,
+    required: false,
+  })
+  @IsNumber()
+  @IsOptional()
+  clientPhone?: number;
 
   @ApiProperty({
     description:

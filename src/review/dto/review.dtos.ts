@@ -7,6 +7,7 @@ import {
   IsNumber,
   IsIn,
   IsEmail,
+  MaxLength,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -24,6 +25,7 @@ export class CreateTextnoteDTO {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
+  @MaxLength(1500)
   description: string;
 
   @ApiProperty()

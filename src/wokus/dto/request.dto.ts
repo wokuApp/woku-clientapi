@@ -160,6 +160,7 @@ export class CreateTextnoteDTO {
     example: 'Very good the Docker course!',
   })
   @IsString()
+  @MaxLength(3000)
   @IsNotEmpty()
   description: string;
 

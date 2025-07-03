@@ -25,7 +25,7 @@ export class CreateTextnoteDTO {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  @MaxLength(1500)
+  @MaxLength(3000)
   description: string;
 
   @ApiProperty()

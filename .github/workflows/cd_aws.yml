@@ -1,0 +1,53 @@
+name: Deploy (Copilot → ECS)
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+# Prevent overlapping deploys to the same env/service
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  id-token: write   # required for OIDC
+  contents: read
+
+env:
+  AWS_REGION: us-east-1
+  COPILOT_SERVICE: woku-flow
+  COPILOT_ENV: prod
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::893061506665:role/CopilotDeployRole
+          aws-region: ${{ env.AWS_REGION }}
+
+      - uses: ksivamuthu/aws-copilot-github-action@v0.0.8
+        with:
+          command: install
+      - run: |
+          copilot --version
+
+      - name: Deploy service with Copilot
+        run: |
+          # Builds the image, pushes to ECR, updates ECS service
+          copilot svc deploy \
+            --name "${{ env.COPILOT_SERVICE }}" \
+            --env "${{ env.COPILOT_ENV }}" \
+            --tag "${{ github.sha }}"
+
+      - name: Describe service (useful logs)
+        if: always()
+        run: |
+          copilot svc show --name "${{ env.COPILOT_SERVICE }}" --env "${{ env.COPILOT_ENV }}" --resources

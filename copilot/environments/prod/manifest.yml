@@ -1,0 +1,46 @@
+# The manifest for the "prod" environment.
+# Read the full specification for the "Environment" type at:
+#  https://aws.github.io/copilot-cli/docs/manifest/environment/
+
+# Your environment name will be used in naming your resources like VPC, cluster, etc.
+name: prod
+type: Environment
+
+# Import your own VPC and subnets or configure how they should be created.
+# network:
+#   vpc:
+#     id:
+
+# Configure the load balancers in your environment, once created.
+http:
+  public:
+    certificates:
+      - arn:aws:acm:us-east-1:893061506665:certificate/32dd137d-e9d0-4476-a740-be27291370f2
+
+# Configure observability for your environment resources.
+observability:
+  container_insights: false
+
+# Shared SSM access policy for all services in this environment
+exec_role_policy:
+  - |
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "ssm:GetParameters",
+            "ssm:GetParameter"
+          ],
+          "Resource": "arn:aws:ssm:us-east-1:893061506665:parameter/shared/prod/secrets/*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "kms:Decrypt"
+          ],
+          "Resource": "arn:aws:kms:us-east-1:893061506665:alias/aws/ssm"
+        }
+      ]
+    }

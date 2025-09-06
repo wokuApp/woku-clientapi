@@ -16,7 +16,7 @@ permissions:
 
 env:
   AWS_REGION: us-east-1
-  COPILOT_SERVICE: woku-flow
+  COPILOT_SERVICE: woku-clientapi
   COPILOT_ENV: prod
 
 jobs:

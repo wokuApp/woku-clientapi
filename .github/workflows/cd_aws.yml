@@ -44,10 +44,10 @@ jobs:
           # Builds the image, pushes to ECR, updates ECS service
           copilot svc deploy \
             --name "${{ env.COPILOT_SERVICE }}" \
-            --env "${{ env.COPILOT_ENV }}" \
+            \
             --tag "${{ github.sha }}"
 
       - name: Describe service (useful logs)
         if: always()
         run: |
-          copilot svc show --name "${{ env.COPILOT_SERVICE }}" --env "${{ env.COPILOT_ENV }}" --resources
+          copilot svc show --name "${{ env.COPILOT_SERVICE }}" --resources
